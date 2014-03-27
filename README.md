@@ -1,4 +1,4 @@
-![](http://bloop.s3.amazonaws.com/pluginsSmall.png )
+![](http://d.pr/i/Cqgn+)
 Airmail Plugin Framework (AMPF) 1.0
 ============================
 The AMPF provides the API necessary to develop a plugin for Airmail.
