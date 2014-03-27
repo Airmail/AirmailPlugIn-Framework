@@ -8,7 +8,10 @@
 
 #import "AMPTranslate.h"
 #import "AMPTranslateView.h"
+#import "NSString+HTML.h"
+
 const NSString *amp_translate_option = @"amp_translate_option";
+
 
 @implementation AMPTranslate
 
@@ -230,12 +233,11 @@ const NSString *amp_translate_option = @"amp_translate_option";
     {
         //http://translate.google.com/#origin_language_or_auto|destination_language|encoded_phrase
         //http://translate.google.com/translate?js=n&sl=auto&tl=destination_language&text=encoded_phrase
-
         //http://translate.google.com/?sl=auto#auto/it/gfrcdx%0Agrfcdsx%0Ab3gfcd%0A%0Ab3gvrwcda
 
         for(AMPMessage *message in action.messages)
         {
-            NSString *sbody = [s stringByAppendingFormat:@"%@",[self urlencode:message.plainBody]];
+            NSString *sbody = [s stringByAppendingFormat:@"%@",[self urlencode:[message.plainBody stringByConvertingHTMLToPlainText]]];
             NSURL *url = [NSURL URLWithString:sbody];
             if(url)
                 [[NSWorkspace sharedWorkspace] openURL:url];
@@ -243,6 +245,9 @@ const NSString *amp_translate_option = @"amp_translate_option";
     }
     
 }
+
+
+
 
 
 @end
