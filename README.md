@@ -28,4 +28,4 @@ More Docs
 
 Feedback and Support
 ============================
-- Class Documentation
+- http://airmail.tenderapp.com
