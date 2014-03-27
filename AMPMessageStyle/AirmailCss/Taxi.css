@@ -1,0 +1,19 @@
+*,tr,td,table,html,th,hr,body,tbody,div {
+
+    font-size: 18px !important;
+    font-family:"avenir next" !important;
+    color:Black; !important;
+	background-color:Yellow !important;
+	border:0px!important;
+	border-top: 0px;
+	background-color:Yellow !important; 
+	background-image:url('') !important;
+}
+
+img {
+    Display:none;
+}
+
+a{
+    color:green; !important;
+}
