@@ -22,9 +22,9 @@ You need to add a reference to the AMPF in your plugin project in order to use t
 
 More Docs
 ============================
-- Wiki
-- Class Documentation
+[- Wiki](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMP-Framework)
+[- Class documentation](http://sdk.airmailapp.com)
 
 Feedback and Support
 ============================
-- http://airmail.tenderapp.com
+[- Feedback](http://airmail.tenderapp.com)
