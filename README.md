@@ -12,7 +12,7 @@ The implementation of a plugin is necessary to inherit from the AMPF/AMPlugin cl
 The framework is an extended part of Airmail.
 [API Call List](https://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPF-Calls)
 
-Sample plugin
+Samples
 ============================
 The bundle inluiced few sample plugins that show some API of the framewordk.
 
