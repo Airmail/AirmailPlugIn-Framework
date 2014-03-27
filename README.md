@@ -11,8 +11,12 @@ The framework is an extended part of Airmail.
 
 Sample plugin
 ============================
-The framework is an extended part of Airmail.
+The bundle inluiced few sample plugins that show some API of the framewordk.
 
+[AMPlug Composer Template SDK Sample ](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPlug-Composer-Template-SDK-Sample)  
+[AMPlug Message Style SDK Sample](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPlug-Message-Style-SDK-Sample)  
+[AMPlug Simple Notifier SDK Sample](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPlug-Simple-Notifier-SDK-Sample)  
+[AMPlug Translate SDK Sample](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPlug-Translate-SDK-Sample)
 How to install
 ============================
 You need to add a reference to the AMPF in your plugin project in order to use the requested classes. After you build your plugin, copy the bundle in the appropriate directory.
