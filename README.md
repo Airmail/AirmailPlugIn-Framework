@@ -1,2 +1,2 @@
-Airmail-Plug-In-Framework
-=========================
+Airmail-Plug-In-Framework 1.0
+============================
