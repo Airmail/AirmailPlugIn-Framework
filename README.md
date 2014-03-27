@@ -17,8 +17,8 @@ How to install
 ============================
 You need to add a reference to the AMPF in your plugin project in order to use the requested classes. After you build your plugin, copy the bundle in the appropriate directory.
 
-~Library/Containers/it.bloop.airmail/Data/Library/Application Support/Airmail/General/Plugins
-~Library/Containers/it.bloop.airmail.beta8/Data/Library/Application Support/Airmail/General/Plugins
+`~Library/Containers/it.bloop.airmail/Data/Library/Application Support/Airmail/General/Plugins`
+`~Library/Containers/it.bloop.airmail.beta8/Data/Library/Application Support/Airmail/General/Plugins`
 
 More Docs
 ============================
