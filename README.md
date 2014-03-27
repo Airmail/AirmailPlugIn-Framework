@@ -32,7 +32,7 @@ More Docs
 [- Wiki](https://github.com/Airmail/Airmail-Plug-In-Framework/wiki)  
 [- Class documentation](http://sdk.airmailapp.com)
 
-![](http://d.pr/i/47fI++)
+![](http://d.pr/i/47fI+)
 
 Support
 ============================
