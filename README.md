@@ -1,16 +1,13 @@
-Airmail-Plug-In-Framework 1.0
+Airmail Plug In Framework 1.0
 ============================
 
-Why a Plug-In Framework
-============================
 
 The framework is an extended part of Airmail.
 
 
-Sample plugin
+Sample PlugIn
 ============================
-
-The framework is an extended part of Airmail.
+Along the framework there are some plu
 
 How to install
 ============================
