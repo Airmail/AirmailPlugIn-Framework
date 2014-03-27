@@ -7,6 +7,8 @@ Why a Plug-In Framework?
 ============================
 The implementation of a plugin is necessary to inherit from the AMPF/AMPlugin class and to override the request methods (see Class Documentation)
 
+![](http://d.pr/i/TWsK+)
+
 The framework is an extended part of Airmail.
 [API Call List](https://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPF-Calls)
 
@@ -30,6 +32,8 @@ More Docs
 [- Wiki](https://github.com/Airmail/Airmail-Plug-In-Framework/wiki)  
 [- Class documentation](http://sdk.airmailapp.com)
 
-Feedback and Support
+![](http://d.pr/i/47fI++)
+
+Support
 ============================
 [- Feedback](http://airmail.tenderapp.com)
