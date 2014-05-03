@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "AMPlugin.h"
+//Objects
 #import "AMPObject.h"
 #import "AMPAccount.h"
 #import "AMPAddress.h"
@@ -20,14 +21,34 @@
 #import "AMPSignature.h"
 #import "AMPFolder.h"
 
+//Utility
 #import "AMPCallBack.h"
 #import "AMPUidFlag.h"
 #import "AMPComposerInfo.h"
 #import "AMPMenuAction.h"
 #import "AMPView.h"
+#import "AMPSignatureVerify.h"
+#import "AMPSendResult.h"
 
+//Mailcore
+#import "AMPMCOAddress.h"
+#import "AMPMCOAttachment.h"
+#import "AMPMCOAbstractPart.h"
+#import "AMPMCOMultiPart.h"
+#import "AMPMCOAbstractMultiPart.h"
+#import "AMPMCOMessagePart.h"
+#import "AMPMCOAbstractMessagePart.h"
+#import "AMPMCOMessageHeader.h"
+#import "AMPMCOAbstractMessage.h"
+#import "AMPMCOMessageParser.h"
+#import "AMPMCOMessageBuilder.h"
+
+//Categories
+#import "NSScanner+Utility.h"
+#import "NSData+AMPBase64.h"
 
 enum amp_message_localflags {
+    
     AMP_FLAG1 = 1,
     AMP_FLAG2 = 2,
     AMP_FLAG3 = 3,
@@ -56,6 +77,24 @@ enum amp_provderType {
     AMP_PROVIDER_GENERICEXCHANGE     = 200,
     
     AMP_PROVIDER_GENERICLOCAL        = 300
+};
+
+enum amp_encryption_type {
+    AMP_ENCRYPTED_NONE      = 0,
+    AMP_ENCRYPTED_SIGNED    = 1 << 0,
+    AMP_ENCRYPTED           = 1 << 1,
+};
+
+enum amp_send_result {
+    AMP_SEND_RESULT_NONE    = 0,
+    AMP_SEND_RESULT_FAIL    = 1 << 0,
+    AMP_SEND_RESULT_SUCCESS = 1 << 1,
+};
+
+enum amp_verify_signature {
+    AMP_SIGNED_NONE       = 0,
+    AMP_SIGNED_FAILS      = 1 << 0,
+    AMP_SIGNED_SUCCESS    = 1 << 1,
 };
 
 enum amp_composertype {

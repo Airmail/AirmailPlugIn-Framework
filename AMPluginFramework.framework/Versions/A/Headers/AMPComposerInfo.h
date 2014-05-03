@@ -10,6 +10,7 @@
 #import <WebKit/WebKit.h>
 
 @class AMPMessage;
+@class AMPlugin;
 @interface AMPComposerInfo : NSObject
 {
     NSObject *back;
@@ -36,7 +37,7 @@
 @property (strong) NSNumber *mode;
 
 /**
- *  The web view of the compose
+ *  The web view of the composer
  */
 @property (weak)   WebView  *webView;
 
@@ -44,5 +45,17 @@
  *  The original represented object passed by the plugin in the menu item
  */
 @property (strong) NSObject *representedObject;
+
+/**
+ *  All the plugins views in the composer
+ */
+@property (weak) NSDictionary *composerViews;
+
+/**
+ *  Get the composer button for the input plugin
+ */
+- (NSArray*) composerBtn:(AMPlugin*)plugin;
+
+
 
 @end

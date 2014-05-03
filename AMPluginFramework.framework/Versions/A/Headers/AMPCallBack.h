@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class AMPAccount;
 @class AMPMessage;
+@class AMPComposerInfo;
 @interface AMPCallBack : NSObject
 {
     id callback;
@@ -87,4 +88,5 @@
  *  @return the image
  */
 - (NSImage*) MessageImage:(AMPMessage*)message;
+
 @end

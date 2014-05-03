@@ -17,13 +17,12 @@
 
 
 /**
- *  When the view is displayed on the Plugin slection in the preference section
+ *  When the view is displayed on the Plugin selection in the preference section
  */
 - (void) RenderView;
 
 /**
  *  When all plugin is reloaded
  */
-
 - (void) ReloadView;
 @end

@@ -28,6 +28,8 @@
  *
  *  @return an id with the populated property
  */
+- (id) callSelector:(SEL)selector;
 - (id) callSelector:(SEL)selector obj:(id)object;
+- (id) callSelector:(SEL)selector obj:(id)object obj:(id)object2;
 
 @end

@@ -10,6 +10,7 @@
 #import "AMPObject.h"
 @class AMPAccount;
 @class AMPAddress;
+@class AMPComposerInfo;
 @interface AMPMessage : AMPObject
 {
     
@@ -153,10 +154,44 @@
 - (NSArray*) replyTo;
 
 /**
+ *  The message rfc
+ *
+ *  @return the full rfc of the message
+ */
+- (NSData*) rfcData;
+
+
+/**
  *  A dictionary,the key is the folder idx, the objec is an AMPUidFlag (uid and flag) for the folder
  *  a message can belogn to multiple folders with different uids/flags
  *
  *  @return a dictionary
  */
 - (NSDictionary*) folderUids;
+
+
+/**
+ *  The composer that has generated the message in the case of a send
+ *
+ *  @return a the composer info
+ */
+- (AMPComposerInfo*) composerInfo;
+
+
+/**
+ *  The encypted status fo the message
+ *
+ *  @return an encypted based on amp_encryption_type
+ */
+- (NSNumber*) encrypted;
+
+/**
+ *  Get the mails in the local message
+ */
+-(NSArray*) GetMails;
+
+/**
+ *  Get a dictionary with to,cc,bcc as keys and an array of mails for each entry
+ */
+-(NSDictionary*) GetMailsMaps;
 @end

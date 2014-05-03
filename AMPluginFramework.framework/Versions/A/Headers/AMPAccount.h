@@ -10,7 +10,6 @@
 #import "AMPObject.h"
 @class AMPProvider;
 @class AMPSignature;
-#import "AMPObject.h"
 @interface AMPAccount : AMPObject
 {
     

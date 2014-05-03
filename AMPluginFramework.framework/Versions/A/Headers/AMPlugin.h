@@ -12,21 +12,39 @@
 @class AMPMessage;
 @class AMPView;
 @class AMPComposerInfo;
-
+@class AMPMCOMessageParser;
+@class AMPMCOMessageBuilder;
+@class AMPSignatureVerify;
+@class AMPSendResult;
 
 @interface AMPlugin : NSObject
 {
     
 }
-@property (strong) NSString *path;
+/**
+ *  The plugin data path
+ */
+@property (strong) NSString *dataPath;
+
+/**
+ *  The plugin bundle
+ */
 @property (strong) NSBundle *bundle;
+
+/**
+ *  The plugin preferences
+ */
 @property (strong) NSMutableDictionary *preferences;
+
+/**
+ *  The plugin view (in plugin prefernece of AM)
+ */
 @property (strong) AMPView *myView;
 
-- (id)initWithbundle:(NSBundle*)bundle parh:(NSString*)path;
-    
+- (id)initWithbundle:(NSBundle*)bundleIn path:(NSString*)pathIn;
+
 /**
- *  The Load is called int ht eplugin init
+ *  The Load is called int the plugin init
  *
  *  @return Boolean if NO the plugin will not be loaded
  */
@@ -119,7 +137,13 @@
 - (void) Reload;
 
 //Utilities
-    
+/**
+ *  load an image from the plugin bundle
+ *
+ *  @return the image
+ */
+- (NSImage*) loadImage:(NSString*)imageName;
+
 /**
  *  the suggested path for saving data
  *
@@ -203,7 +227,7 @@
 /**
  *  Get the html for the new created composer
  *
- *  @param html the html to process
+ *  @param info of the current composer
  *
  *  @return the html to render
  */
@@ -216,6 +240,23 @@
  */
 - (NSMenuItem*) ampMenuComposerItem:(AMPComposerInfo*)info;
 
+/**
+ *  Called to add a button on the composer
+ *
+ *  @param info of the current composer
+ *
+ *  @return the button to show
+ */
+- (NSArray*) ampPileComposerView:(AMPComposerInfo *)info;
+
+/**
+ *  Called on a recipients change in the composer
+ *
+ *  @param info of the current composer
+ *
+ *  @return void
+ */
+- (NSNumber*) ampPileChangedRecipients:(AMPComposerInfo*)info;
 
 #pragma mark - Render BodyView
 /**
@@ -225,20 +266,29 @@
  *
  *  @param message the message to render
  *
- *  @return the html to render
+ *  @return info of the current composer
  */
 - (NSString*) ampUniqueMessageRender:(AMPMessage*)message;
 
 /**
  *  Get the html from the html that AM create from a message, to render in the
  *  bodyview. Stack methods can be queued, so AM will call all the plugins with 
- *  a stack method in the a random order.
+ *  a stack method in a random order.
  *
  *  @param html the html to process
  *
  *  @return the html to render
  */
 - (NSString*) ampStackMessageRenderFromHtml:(NSString*)html message:(AMPMessage*)message;
+
+/**
+ *  Get the a message and create an array of  NSView to render in the bodyview
+ *
+ *  @param message the message to render
+ *
+ *  @return the array of views to render
+ */
+- (NSArray*) ampPileMessageView:(AMPMessage*)message;
 
 #pragma mark - Notify
 /**
@@ -269,5 +319,44 @@
  *  @return the Number for a bool if the rule is applied to the message
  */
 - (NSNumber*) ampRuleActionItem:(AMPMessage*)message;
+
+#pragma mark - Crypto
+/**
+ *  Called to let AM know if the message is encrypted
+ *
+ *  @param the parser of the rfc to analyze
+ *
+ *  @return a Number with the amp_encryption_type 
+ */
+- (NSNumber*)  ampPileIsEncrypted:(AMPMCOMessageParser*)parser;
+
+/**
+ *  Called to decrypt the message
+ *
+ *  @param the message
+ *
+ *  @return the decrypted rfc data to render
+ */
+- (NSData*) ampStackDecrypt:(AMPMessage*)message;
+
+/**
+ *  Called to verify the signature of the message
+ *
+ *  @param the message
+ *
+ *  @return a Number with the amp_verify_signature value
+ */
+- (AMPSignatureVerify*) ampPileVerifySignature:(AMPMessage*)message;
+
+
+#pragma mark - Send
+/**
+ *  Called to before to send a mail
+ *
+ *  @param the builder of the rfc to change
+ *
+ *  @return the builder of the rfc to send
+ */
+- (AMPSendResult*) ampStackSendRfc:(NSString*)rfc composer:(AMPComposerInfo*)info;
 
 @end
