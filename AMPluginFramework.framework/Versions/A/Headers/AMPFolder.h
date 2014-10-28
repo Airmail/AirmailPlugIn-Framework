@@ -151,14 +151,14 @@
  *
  *  @return A bool value
  */
-- (NSColor*) colorTheme;
+- (NSNumber*) colorTheme;
 
 /**
  *  The custom color of the folder
  *
  *  @return The folder color
  */
-- (NSColor*) colorCustom;
+- (id) colorCustom;
 
 /**
  *  The date of the last folder update

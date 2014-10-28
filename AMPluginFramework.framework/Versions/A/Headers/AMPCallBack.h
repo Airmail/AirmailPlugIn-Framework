@@ -31,6 +31,14 @@
 - (void) ReplyMessages:(NSArray*)messages;
 
 /**
+ *  Mark as read action, it will mark as read the messages passed
+ *
+ *  @param messages the message to mark
+ */
+- (void) MarkAsReadMessages:(NSArray*)messages;
+
+
+/**
  *  Forward message action, it will open a composer for each message passed
  *
  *  @param messages the message to forward

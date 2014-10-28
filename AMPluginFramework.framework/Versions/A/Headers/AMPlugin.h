@@ -238,7 +238,7 @@
  *
  *  @return the menu item
  */
-- (NSMenuItem*) ampMenuComposerItem:(AMPComposerInfo*)info;
+- (id) ampMenuComposerItem:(AMPComposerInfo*)info;
 
 /**
  *  Called to add a button on the composer
@@ -308,7 +308,7 @@
  *
  *  @return the menu item
  */
-- (NSMenuItem*) ampMenuActionItem:(NSArray*)messages;
+- (id) ampMenuActionItem:(NSArray*)messages;
 
 #pragma mark - Rule
 /**
