@@ -187,11 +187,21 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         //CASE 1 Signer >> multi-signer does not work we have only 1 sender
         for(GPGSignature *sign in arr)
         {
-            if(sign.trust < GPGValidityInvalid && [sign.email isEqualToString:message.from.mail])
+            if(sign.trust < GPGValidityInvalid )
             {
-                //NSLog(@"SIGNATURE OK %@",sign.email);
-                ver.signatureVerify = AMP_SIGNED_SUCCESS;
-                return ver;
+                for(GPGKey *key in [[GPGKeyManager sharedInstance] allKeys])
+                {
+                    if( [sign.email isEqualToString:key.email] ) {
+                        for (GPGUserID *uid in key.userIDs) {
+                            if([uid.email isEqualToString:message.from.mail])
+                            {
+                                NSLog(@"SIGNATURE OK %@ %@",uid.email);
+                                ver.signatureVerify = AMP_SIGNED_SUCCESS;
+                                return ver;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
