@@ -49,10 +49,12 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     for(GPGKey *key in [[GPGKeyManager sharedInstance] allKeys])
     {
-        if([key.email isEqualToString:mail])
-        {
-            NSLog(@"AMPGpgEncryption GetKeyForMail GPGKey %@ canAnySign %d canAnyEncrypt %d key.validity %d %@",mail, key.canSign, key.canAnyEncrypt, key.validity, key);
-            return key;
+        for (GPGUserID *uid in key.userIDs) {
+            if([uid.email isEqualToString:mail])
+            {
+                NSLog(@"AMPGpgEncryption GetKeyForMail GPGKey %@ canAnySign %d canAnyEncrypt %d key.validity %d %@",mail, key.canSign, key.canAnyEncrypt, key.validity, key);
+                return key;
+            }
         }
     }
     return nil;
