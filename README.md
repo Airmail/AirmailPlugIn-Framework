@@ -19,10 +19,10 @@ The bundle inluiced few sample plugins that show some API of the framewordk.
 [AMPlug Simple Notifier SDK Sample](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPlug-Simple-Notifier-SDK-Sample)  
 [AMPlug Translate SDK Sample](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPlug-Translate-SDK-Sample)
 
-[AMPlug Campaign Monitor](https://github.com/Airmail/CampaignMonitor-AMPlug)
-[AMPlug MailChimp](https://github.com/Airmail/Mailchimp-AMPlug)
-[AMPlug Wunderlist](https://github.com/Airmail/Wunderlist-AMPlug)
-[AMPlug Todoist](https://github.com/Airmail/Todoist-AMPlug)
+[AMPlug Campaign Monitor](https://github.com/Airmail/CampaignMonitor-AMPlug)  
+[AMPlug MailChimp](https://github.com/Airmail/Mailchimp-AMPlug)  
+[AMPlug Wunderlist](https://github.com/Airmail/Wunderlist-AMPlug)  
+[AMPlug Todoist](https://github.com/Airmail/Todoist-AMPlug)  
 
 How to install
 ============================
