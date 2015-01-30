@@ -1,4 +1,4 @@
-![](http://d.pr/i/Cqgn+)
+![](http://d.pr/i/y2dn+)
 Airmail Plugin Framework (AMPF) 1.0
 ============================
 The AMPF provides the API necessary to develop a plugin for Airmail.
