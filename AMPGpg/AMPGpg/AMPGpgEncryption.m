@@ -39,21 +39,23 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
 - (NSInteger) CheckSender:(AMPComposerInfo *)info
 {
-    GPGKey *key = [self GetKeyForMail:info.localMessage.from.mail];
+    GPGKey *key = [self GetValidKeyForMail:info.localMessage.from.mail];
     if(key.canAnySign)
         return 1;
     return 0;
 }
 
-- (GPGKey*) GetKeyForMail:(NSString*)mail
+- (GPGKey*) GetValidKeyForMail:(NSString*)mail
 {
     for(GPGKey *key in [[GPGKeyManager sharedInstance] allKeys])
     {
-        for (GPGUserID *uid in key.userIDs) {
-            if([uid.email isEqualToString:mail])
-            {
-                NSLog(@"AMPGpgEncryption GetKeyForMail GPGKey %@ canAnySign %d canAnyEncrypt %d key.validity %d %@",mail, key.canSign, key.canAnyEncrypt, key.validity, key);
-                return key;
+        if(key.validity < GPGValidityInvalid) {
+            for (GPGUserID *uid in key.userIDs) {
+                if([uid.email isEqualToString:mail])
+                {
+                    NSLog(@"AMPGpgEncryption GetKeyForMail GPGKey %@ canAnySign %d canAnyEncrypt %d key.validity %d %@",mail, key.canSign, key.canAnyEncrypt, key.validity, key.keyID);
+                    return key;
+                }
             }
         }
     }
@@ -73,7 +75,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     
     for(NSString *mail in mails)
     {
-        GPGKey *key = [self GetKeyForMail:mail];
+        GPGKey *key = [self GetValidKeyForMail:mail];
         if(!key || !key.canAnyEncrypt || key.validity >= GPGValidityInvalid)
             return 0;
     }
@@ -197,7 +199,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
                         for (GPGUserID *uid in key.userIDs) {
                             if([uid.email isEqualToString:message.from.mail])
                             {
-                                NSLog(@"SIGNATURE OK %@ %@",uid.email);
+                                NSLog(@"SIGNATURE OK %@",uid.email);
                                 ver.signatureVerify = AMP_SIGNED_SUCCESS;
                                 return ver;
                             }
@@ -253,7 +255,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     gpgc.useArmor = YES;
     gpgc.useTextMode = YES;
     gpgc.trustAllKeys = YES;
-    GPGKey *key = [self GetKeyForMail:from];
+    GPGKey *key = [self GetValidKeyForMail:from];
     if(!key)
     {
         NSLog(@"Error no signer key %@",from);
