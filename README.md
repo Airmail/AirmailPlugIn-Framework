@@ -12,7 +12,7 @@ The framework is an extended part of Airmail.
 
 Samples
 ============================
-The bundle inluiced few sample plugins that show some API of the framewordk.
+The bundle inluiced few sample plugins that show some API of the framework.
 
 [AMPlug Composer Template SDK Sample ](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPlug-Composer-Template-SDK-Sample)  
 [AMPlug Message Style SDK Sample](http://github.com/Airmail/Airmail-Plug-In-Framework/wiki/AMPlug-Message-Style-SDK-Sample)  
