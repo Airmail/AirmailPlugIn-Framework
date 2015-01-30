@@ -194,4 +194,9 @@
  *  Get a dictionary with to,cc,bcc as keys and an array of mails for each entry
  */
 -(NSDictionary*) GetMailsMaps;
+
+/**
+ *  Get a unique url for a message
+ */
+- (NSString*) urlformessage;
 @end
