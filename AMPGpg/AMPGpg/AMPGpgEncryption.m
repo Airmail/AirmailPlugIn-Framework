@@ -85,11 +85,11 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 - (NSString*) Envelope:(NSString*)rfc info:(AMPComposerInfo*)info enc:(BOOL)enc sign:(BOOL)sign
 {
     if(!rfc)
-        @throw [NSException exceptionWithName:AMPGpgEncryptionException reason:@"Envelope missing rfc input" userInfo:nil];
+        @throw [NSException exceptionWithName:AMPGpgEncryptionException reason:@"GPG Envelope missing rfc input" userInfo:nil];
     
     NSString *from              = info.localMessage.from.mail;
     if(!from)
-        @throw ([NSException exceptionWithName:AMPGpgEncryptionException reason:@"Envelope cannot get the from of the message" userInfo:nil]);
+        @throw ([NSException exceptionWithName:AMPGpgEncryptionException reason:@"GPG Envelope cannot get the from of the message" userInfo:nil]);
 
     NSDictionary *maps          = [info.localMessage GetMailsMaps];
     
@@ -105,14 +105,14 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         rfcFinal = [self Sign:rfc from:from recipients:recipients hiddenRecipients:hiddenRecipients];
     
     if(!rfcFinal)
-        @throw ([NSException exceptionWithName:AMPGpgEncryptionException reason:@"Envelope cannot sign the message" userInfo:nil]);
+        @throw ([NSException exceptionWithName:AMPGpgEncryptionException reason:@"GPG Envelope cannot sign the message" userInfo:nil]);
     
     //ENCRYPT
     if(enc)
         rfcFinal = [self Encrypt:rfcFinal from:from recipients:recipients hiddenRecipients:hiddenRecipients];
     
     if(!rfcFinal)
-        @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"Envelope cannot encrypt the message" userInfo:nil];
+        @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Envelope cannot encrypt the message" userInfo:nil];
 
     return rfcFinal;
 }
@@ -121,27 +121,27 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     NSData *data = message.rfcData;
     if(!data)
-        @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"Decrypt missing data to decrypt" userInfo:nil];
+        @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt missing data to decrypt" userInfo:nil];
 
     AMPMCOMessageParser *parser = [AMPMCOMessageParser messageParserWithData:data];
     if(!parser)
-        @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"Decrypt cannot parse the data" userInfo:nil];;
+        @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot parse the data" userInfo:nil];;
     
     NSArray *encParts = [parser.mainPart PartsForMime:@"application/octet-stream"];
     if(encParts.count == 1)
     {
         AMPMCOAbstractPart *part = encParts[0];
         if(![part.filename isEqualToString:@"encrypted.asc"])
-            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"Decrypt cannot find encrypted.asc" userInfo:nil];;
+            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot find encrypted.asc" userInfo:nil];;
         
         //NSLog(@"%@",part);
         NSData *dataAttachment = [part callSelector:@selector(data)];
         if(!dataAttachment || dataAttachment.length == 0)
-            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"Decrypt cannot get data from encrypted attachment" userInfo:nil];;
+            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot get data from encrypted attachment" userInfo:nil];;
         
         NSData *decodedData = [[GPGController gpgController] decryptData:dataAttachment];
         if(!decodedData || decodedData.length == 0)
-            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"Decrypt cannot decryptData" userInfo:nil];;
+            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot decryptData" userInfo:nil];;
         
         //NSLog(@"***** ***** ***** ***** \n%@", [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding]);
         return decodedData;
@@ -158,7 +158,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     
     NSData *messageData = message.rfcData;
     if(!messageData)
-        @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"VerifySignature missing data to decrypt" userInfo:nil];;
+        @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG VerifySignature missing data to decrypt" userInfo:nil];;
     
     NSData *detachedData = nil;
     //Se e' signed uso detached content
@@ -168,7 +168,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         NSString *rfc   = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
         detachedData    = [self GetSignedPart:rfc];
         if(!detachedData)
-            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"VerifySignature cannot extract detached data" userInfo:nil];;
+            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG VerifySignature cannot extract detached data" userInfo:nil];;
     }
     
     NSArray *encParts = [parser.mainPart PartsForMime:@"application/pgp-signature"];
