@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:AMPCrypto/AMPCrypto.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AMPCustomTemplates/AMPCustomTemplate.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AMPGpg/AMPGpg.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AMPMessageStyle/AMPMessageStyle.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AMPNotify/AMPSimpleNotifier.xcodeproj">
+   </FileRef>
+</Workspace>
