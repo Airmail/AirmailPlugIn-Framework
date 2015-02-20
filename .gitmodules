@@ -1,0 +1,6 @@
+[submodule "AMPGpg/Dependencies/Libmacgpg"]
+	path = AMPGpg/Dependencies/Libmacgpg
+	url = https://github.com/GPGTools/Libmacgpg.git
+[submodule "AMPGpg/Dependencies/Libmacgpg/Dependencies/GPGTools_Core"]
+	path = AMPGpg/Dependencies/Libmacgpg/Dependencies/GPGTools_Core
+	url = https://github.com/GPGTools/GPGTools_Core.git
