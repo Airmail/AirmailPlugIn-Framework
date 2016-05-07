@@ -27,7 +27,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         NSLog(@"No Parser");
         return flag;
     }
-    
+
     for(AMPMCOAbstractPart *part in  [parser.mainPart AllParts])
     {
         NSLog(@"DOING Iteration");
@@ -37,7 +37,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
             NSLog(@"Mime-Type: %@",part.mimeType);
             if([part.mimeType isEqualToString:@"application/pgp-signature"])
                 flag |= AMP_ENCRYPTED_SIGNED;
-            
+
             if([part.mimeType isEqualToString:@"application/pgp-encrypted"]) //or check multipart/encrypted
                 flag |= AMP_ENCRYPTED;
         }
@@ -78,11 +78,11 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSArray *mails   = [info.localMessage GetMails];
     if(mails.count == 0)
         return 0;
-        
+
     NSSet   *keys    = [[GPGKeyManager sharedInstance] allKeys];
     if(keys.count == 0)
         return 0;
-    
+
     for(NSString *mail in mails)
     {
         GPGKey *key = [self GetValidKeyForMail:mail];
@@ -96,31 +96,31 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     if(!rfc)
         @throw [NSException exceptionWithName:AMPGpgEncryptionException reason:@"GPG Envelope missing rfc input" userInfo:nil];
-    
+
     NSString *from              = info.localMessage.from.mail;
     if(!from)
         @throw ([NSException exceptionWithName:AMPGpgEncryptionException reason:@"GPG Envelope cannot get the from of the message" userInfo:nil]);
 
     NSDictionary *maps          = [info.localMessage GetMailsMaps];
-    
+
     NSMutableArray *recipients  = [NSMutableArray array];
     [recipients addObjectsFromArray:maps[@"to"]];
     [recipients addObjectsFromArray:maps[@"cc"]];
     [recipients addObject:from];                  //Encrypt also with my key to read it in sent messages
     NSArray *hiddenRecipients  = maps[@"bcc"];
-    
+
     NSString *rfcFinal = rfc;
     //SIGN
     if(sign)
         rfcFinal = [self Sign:rfc from:from recipients:recipients hiddenRecipients:hiddenRecipients];
-    
+
     if(!rfcFinal)
         @throw ([NSException exceptionWithName:AMPGpgEncryptionException reason:@"GPG Envelope cannot sign the message" userInfo:nil]);
-    
+
     //ENCRYPT
     if(enc)
         rfcFinal = [self Encrypt:rfcFinal from:from recipients:recipients hiddenRecipients:hiddenRecipients];
-    
+
     if(!rfcFinal)
         @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Envelope cannot encrypt the message" userInfo:nil];
 
@@ -136,28 +136,28 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     AMPMCOMessageParser *parser = [AMPMCOMessageParser messageParserWithData:data];
     if(!parser)
         @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot parse the data" userInfo:nil];;
-    
+
     NSArray *encParts = [parser.mainPart PartsForMime:@"application/octet-stream"];
     for (int i = 0; i < [encParts count]; i++) {
         AMPMCOAbstractPart *part = [encParts objectAtIndex:i];
         if(![part.filename hasSuffix:@".asc"])
             continue;
             /*@throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot find encrypted.asc" userInfo:nil];;*/
-        
+
         //NSLog(@"%@",part);
         NSData *dataAttachment = [part callSelector:@selector(data)];
         if(!dataAttachment || dataAttachment.length == 0) {
             NSLog(@"GPG Decrypt cannot get data from encrypted attachment");
             @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot get data from encrypted attachment" userInfo:nil];
         }
-        
+
         NSData *decodedData = [[GPGController gpgController] decryptData:dataAttachment];
         if(!decodedData || decodedData.length == 0) {
             NSLog(@"GPG Decrypt cannot decryptData");
             continue;
             /*@throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot decryptData" userInfo:nil];*/
         }
-        
+
         //NSLog(@"***** ***** ***** ***** \n%@", [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding]);
         return decodedData;
     }
@@ -171,11 +171,11 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     AMPSignatureVerify *ver = [AMPSignatureVerify new];
     ver.signatureVerify = AMP_SIGNED_NONE;
     ver.mimetoRemove    = @[@"application/pgp-signature"];
-    
+
     NSData *messageData = message.rfcData;
     if(!messageData)
         @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG VerifySignature missing data to decrypt" userInfo:nil];;
-    
+
     NSData *detachedData = nil;
     //Se e' signed uso detached content
     AMPMCOMessageParser *parser = [AMPMCOMessageParser messageParserWithData:messageData];
@@ -186,7 +186,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         if(!detachedData)
             @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG VerifySignature cannot extract detached data" userInfo:nil];;
     }
-    
+
     NSArray *encParts = [parser.mainPart PartsForMime:@"application/pgp-signature"];
     if(encParts.count == 1)
     {
@@ -199,7 +199,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         NSData *dataAttachment = [part callSelector:@selector(data)];
         if(!dataAttachment)
             return ver;
-        
+
 //        NSLog(@"***** dataAttachment \n%@", [[NSString alloc] initWithData:dataAttachment encoding:NSUTF8StringEncoding]);
 //        NSLog(@"***** detachedData   \n%@", [[NSString alloc] initWithData:detachedData   encoding:NSUTF8StringEncoding]);
 
@@ -234,10 +234,10 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     //Exctract ctype + body
     NSString *stringToEncrypt = [self GetBodyPartWithHeaders:rfc];
     if(!stringToEncrypt) return nil;
-    
+
     NSData *dataToEncrypt = [stringToEncrypt dataUsingEncoding:NSUTF8StringEncoding];
     if(!dataToEncrypt || dataToEncrypt.length == 0) return nil;
-    
+
     GPGController *gpgc = [GPGController gpgController];
     gpgc.useArmor = YES;
     gpgc.useTextMode = YES;
@@ -250,10 +250,10 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         return nil;
     }
     if(!dataEncrypted || dataEncrypted.length == 0) return nil;
-    
+
 
     //NSData *decodedData = [[GPGController gpgController] decryptData:dataEncrypted];
-    
+
     NSString *rfcret = [self CreateRfcEncrypted:rfc dataEncrypted:dataEncrypted];
     return rfcret;
 }
@@ -263,11 +263,11 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSString *stringToSign = [self GetBodyPartWithHeaders:rfc];
     stringToSign = [stringToSign stringByAppendingString:@"\r\n"];
     if(!stringToSign) return nil;
-   
+
     //Sign the content
     NSData *dataToSign = [stringToSign dataUsingEncoding:NSUTF8StringEncoding];
     if(!dataToSign) return nil;
-    
+
     GPGController *gpgc = [GPGController gpgController];
     gpgc.useArmor = YES;
     gpgc.useTextMode = YES;
@@ -278,11 +278,11 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         NSLog(@"Error no signer key %@",from);
         return nil;
     }
-    
+
     [gpgc setSignerKey:key];
     NSData *dataSigned = [gpgc processData:dataToSign withEncryptSignMode:GPGDetachedSign recipients:NULL hiddenRecipients:NULL];
     if(!dataSigned) return nil;
-    
+
     NSString *nameForHashAlgorithm = [GPGController nameForHashAlgorithm: [gpgc hashAlgorithm]];
 
     return [self CreateRfcSigned:rfc stringToSign:stringToSign dataSigned:dataSigned nameForHashAlgorithm:nameForHashAlgorithm];
@@ -297,8 +297,8 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSString *boundary = (__bridge_transfer NSString *)string;
     if(!boundary)
         boundary = @"------=_Part_68593_50468503.1397487740428";
-    
-    
+
+
 //    Content-Type: multipart/encrypted;
 //        boundary="Apple-Mail=_A3AEE18D-B565-4A74-B695-C9C48DBE43AC";
 //        protocol="application/pgp-encrypted";
@@ -325,12 +325,12 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     body = [body stringByAppendingString:dataEncryptedStr];
     body = [body stringByAppendingString:@"\r\n"];
     body = [body stringByAppendingFormat:@"--%@--",boundary];
-    
+
     NSMutableString *rfcOut = [NSMutableString new];
     NSString *headersWithNewCType = [self TrascriptHeaders:rfc withNewContentType:multipartSignedCtype];
     [rfcOut appendString:headersWithNewCType];
     [rfcOut appendString:body];
-    
+
     return rfcOut;
 }
 
@@ -343,7 +343,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSString *boundary = (__bridge_transfer NSString *)string;
     if(!boundary)
         boundary = @"------=_Part_68593_50468503.1397487740428";
-    
+
     //Content-Type: multipart/signed; boundary="Apple-Mail=_1DF223E0-8C6F-4931-9C66-57559AD94CB5"; protocol="application/pgp-signature"; micalg=pgp-sha512
 
     NSString *multipartSignedCtype = @"Content-Type: multipart/signed;\r\n";
@@ -354,7 +354,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     //    ------=_Part_68593_50468503.1397487740429
     NSString *partSigned = [NSString stringWithFormat:@"--%@\r\n",boundary];
     NSString *dataSignedStr = [[NSString alloc] initWithData:dataSigned encoding:NSASCIIStringEncoding];
-    
+
 //    --Apple-Mail=_1DF223E0-8C6F-4931-9C66-57559AD94CB5
 //    Content-Transfer-Encoding: 7bit
 //    Content-Disposition: attachment; filename=signature.asc
@@ -385,23 +385,23 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     //Content-Type: multipart/signed; boundary="Apple-Mail=_9A3F1E72-6E76-46E6-A41E-A410E2637A5A"; protocol="application/pkcs7-signature"; micalg=sha1
     if(!rfc) return nil;
-    
+
     NSScanner *scan  = [NSScanner scannerWithString:rfc];
     [scan setCharactersToBeSkipped:nil];
-    
+
     if(![scan scanUpAndScan:@"Content-Type:" intoString:nil]) return nil;
-    
+
     NSString *boundary  = [self ParseBoundary:scan];
     if(!boundary) return nil;
     //NSLog(@"%@",boundary);
-    
+
     NSArray *boundaries = [self ParsePartsForBoundary:scan boundary:boundary];
     if(boundaries && boundaries.count > 0)
     {
         NSString *detachedString = boundaries[0];
         if(detachedString)
             return [detachedString dataUsingEncoding:NSASCIIStringEncoding];
-        
+
     }
     return nil;
 }
@@ -414,10 +414,10 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         return nil;
     NSScanner *scanner  = [NSScanner scannerWithString:rfc];
     [scanner setCharactersToBeSkipped:nil];
-    
+
     NSString  *ctype    = [self GetHeader:scanner header:@"Content-Type"];
     if(!ctype) return nil;
-    
+
     NSScanner *scanner2  = [NSScanner scannerWithString:ctype];
     [scanner2 setCharactersToBeSkipped:nil];
     NSString  *boundary = [self ParseBoundary:scanner2];
@@ -426,20 +426,20 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         NSScanner *scannerSinglePart  = [NSScanner scannerWithString:rfc];
         [scannerSinglePart setCharactersToBeSkipped:nil];
         if(![scannerSinglePart scanUpAndScan:@"\r\n\r\n" intoString:nil])return nil;
-        
+
         NSString *rfcToSign = [rfc substringFromIndex:scannerSinglePart.scanLocation];
         return rfcToSign;
     }
-    
+
     NSString *preBoundary    = [NSString stringWithFormat:@"--%@",boundary];
     NSString *closeBoundary  = [NSString stringWithFormat:@"--%@--",boundary];
-    
+
     if(![scanner scanUpToString:preBoundary intoString:nil]) return nil;
-    
+
     NSString *detachedString = nil;
     if(![scanner scanUpToString:closeBoundary intoString:&detachedString]) return nil;
     if(!detachedString) return nil;
-    
+
     detachedString = [NSString stringWithFormat:@"Content-Type:%@\r\n\r\n%@%@",ctype,detachedString,closeBoundary];
     return detachedString; //[detachedString dataUsingEncoding:NSASCIIStringEncoding];
 }
@@ -450,10 +450,10 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     if(![scanner scanUpToString:@"="           intoString:nil]) return nil;
     if(![scanner scanUpToString:@"\""          intoString:nil]) return nil;
     if(![scanner scanString:@"\""              intoString:nil]) return nil;
-    
+
     NSString *boundary  = nil;
     if(![scanner scanUpToString:@"\"" intoString:&boundary]) return nil;
-    
+
     if(!boundary) return nil;
     return boundary;
 }
@@ -463,7 +463,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     NSMutableArray *ret     = [NSMutableArray array];
     NSString *preBoundary   = [NSString stringWithFormat:@"--%@",boundary];
-    
+
     while(YES)
     {
         //Start Boundary (-boundary\r\n)
@@ -472,15 +472,15 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
             break;
 
         if(![scanner scanUpAndScan:@"\n"        intoString:nil]) break;
-        
+
         //        NSString *log;
         //        [scanner nextCharacters:10 inString:&log];
         //        NSLog(@"%@",log);
-        
+
         NSString *detachedString = nil;
         if(![scanner scanUpToString:[NSString stringWithFormat:@"\n%@",preBoundary] intoString:&detachedString])
             break;
-        
+
         [ret addObject:detachedString];
     }
     return ret;
@@ -493,14 +493,14 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
     NSString *header        = [headerName stringByAppendingString:@":"];
     NSString *newline       = @"\r\n";
-    
+
     //Content-Type: application/pkcs7-mime; name=smime.p7m; smime-type=enveloped-data
     //Content-Transfer-Encoding: base64
     //Content-Disposition:
-    
+
     //Se e' il primo o e' dopo alcuni caratteri
     if(![scanner scanUpAndScan:header intoString:nil]) return nil;
-    
+
     NSMutableString *valuex = [NSMutableString new];
     while(YES)
     {
@@ -516,14 +516,14 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         }
         //[valuex appendString:valueNext stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
         [valuex appendString:valueNext];
-        
+
         //skippo la newline
         if(![scanner scanNext:2])
         {
             NSLog(@"Error Cannot scan multi header next 2 chars MA_NEWLINE in ParseHeader %@",headerName);
             return nil;
         }
-        
+
         unichar c = scanner.currentCharacter;
         if ([[NSCharacterSet letterCharacterSet] characterIsMember:c] ||
             [[NSCharacterSet decimalDigitCharacterSet] characterIsMember:c] ||
@@ -552,17 +552,17 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSMutableString *rfcOut = [NSMutableString new];
     __block NSInteger ctypeMode = 0;
     [rfc enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
-        
+
         if([line isEqualToString:@""]) //end of header
         {
             [rfcOut appendString:@"\r\n"];
             *stop = YES;
             return;
         }
-        
+
         if([line hasPrefix:@"Content-Type"])
             ctypeMode = 1; //start
-        
+
         switch (ctypeMode)
         {
             case 0:
@@ -570,14 +570,14 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
                 [rfcOut appendFormat:@"%@\r\n",line];
             }
                 break;
-                
+
             case 1: //start ctype
             {
                 [rfcOut appendFormat:@"%@\r\n",ctype];
                 ctypeMode = 2;
             }
                 break;
-                
+
             case 2: //during ctype
             {
                 if([line rangeOfString:@":"].location != NSNotFound) //nuovo header
