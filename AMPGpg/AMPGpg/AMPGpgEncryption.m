@@ -241,7 +241,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     GPGController *gpgc = [GPGController gpgController];
     gpgc.useArmor = YES;
     gpgc.useTextMode = YES;
-    gpgc.trustAllKeys = YES;
+//    gpgc.trustAllKeys = YES;
     NSData *dataEncrypted = nil;
     @try {
         dataEncrypted = [gpgc processData:dataToEncrypt withEncryptSignMode:GPGPublicKeyEncrypt recipients:recipients hiddenRecipients:hiddenRecipients];
@@ -271,7 +271,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     GPGController *gpgc = [GPGController gpgController];
     gpgc.useArmor = YES;
     gpgc.useTextMode = YES;
-    gpgc.trustAllKeys = YES;
+//    gpgc.trustAllKeys = YES;
     GPGKey *key = [self GetValidKeyForMail:from];
     if(!key)
     {
