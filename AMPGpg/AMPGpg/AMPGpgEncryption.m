@@ -280,7 +280,8 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     }
 
     [gpgc setSignerKey:key];
-    NSData *dataSigned = [gpgc processData:dataToSign withEncryptSignMode:GPGDetachedSign recipients:NULL hiddenRecipients:NULL];
+    NSData *dataSigned = [gpgc processData:dataToSign withEncryptSignMode: GPGDetachedSign recipients:NULL hiddenRecipients:NULL];
+
     if(!dataSigned) return nil;
 
     NSString *nameForHashAlgorithm = [GPGController nameForHashAlgorithm: [gpgc hashAlgorithm]];
@@ -297,7 +298,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSString *boundary = (__bridge_transfer NSString *)string;
     if(!boundary)
         boundary = @"------=_Part_68593_50468503.1397487740428";
-
 
 //    Content-Type: multipart/encrypted;
 //        boundary="Apple-Mail=_A3AEE18D-B565-4A74-B695-C9C48DBE43AC";
