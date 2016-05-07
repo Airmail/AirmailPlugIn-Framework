@@ -360,6 +360,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 //    Content-Disposition: attachment; filename=signature.asc
 //    Content-Type: application/pgp-signature; name=signature.asc
 //    Content-Description: Message signed with OpenPGP using GPGMail
+
     NSString *partSignature = [NSString stringWithFormat:@"--%@\r\n",boundary];
     partSignature = [partSignature stringByAppendingString:@"Content-Transfer-Encoding: 7bit\r\n"];
     partSignature = [partSignature stringByAppendingString:@"Content-Disposition: attachment; filename=signature.asc\r\n"];
