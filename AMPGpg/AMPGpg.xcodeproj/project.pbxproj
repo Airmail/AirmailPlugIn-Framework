@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4EBCCA801A975DF7009532B2 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EBCCA751A975DDB009532B2 /* Libmacgpg.framework */; };
 		B30FF64518FFFCE40053FD49 /* g_unlocked.psd in Resources */ = {isa = PBXBuildFile; fileRef = B30FF64118FFFCE40053FD49 /* g_unlocked.psd */; };
 		B30FF64618FFFCE40053FD49 /* g_locked.psd in Resources */ = {isa = PBXBuildFile; fileRef = B30FF64218FFFCE40053FD49 /* g_locked.psd */; };
 		B30FF64718FFFCE40053FD49 /* g_inactive.psd in Resources */ = {isa = PBXBuildFile; fileRef = B30FF64318FFFCE40053FD49 /* g_inactive.psd */; };
@@ -20,8 +21,6 @@
 		D84DFB0018FECEDA007B4E49 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84DFAFF18FECEDA007B4E49 /* Cocoa.framework */; };
 		D84DFB0A18FECEDA007B4E49 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D84DFB0818FECEDA007B4E49 /* InfoPlist.strings */; };
 		D84DFB3318FECF12007B4E49 /* AMPGpg.m in Sources */ = {isa = PBXBuildFile; fileRef = D84DFB3218FECF12007B4E49 /* AMPGpg.m */; };
-		D8CCFEAB198A01F100503D22 /* Libmacgpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CCFEA1198A01A900503D22 /* Libmacgpg.framework */; };
-		D8CCFEAC198A021D00503D22 /* Libmacgpg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D8CCFEA1198A01A900503D22 /* Libmacgpg.framework */; };
 		D8E1A6E518FEDF5F00352E29 /* AMPGpgView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E1A6E418FEDF5F00352E29 /* AMPGpgView.m */; };
 		D8E1A6E818FEE0BF00352E29 /* AMPGpgEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E1A6E718FEE0BF00352E29 /* AMPGpgEncryption.m */; };
 		D8E1A6E918FEE64A00352E29 /* AMPGpg.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = D84DFAFC18FECEDA007B4E49 /* AMPGpg.bundle */; };
@@ -30,42 +29,42 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D8CCFEA0198A01A900503D22 /* PBXContainerItemProxy */ = {
+		4EBCCA741A975DDB009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = Libmacgpg;
 		};
-		D8CCFEA2198A01A900503D22 /* PBXContainerItemProxy */ = {
+		4EBCCA761A975DDB009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 30C8B38E139503A800F49AA1;
 			remoteInfo = UnitTest;
 		};
-		D8CCFEA4198A01A900503D22 /* PBXContainerItemProxy */ = {
+		4EBCCA781A975DDB009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1B46CFCC161555DF00CF9C5F;
 			remoteInfo = org.gpgtools.Libmacgpg.xpc;
 		};
-		D8CCFEA6198A01A900503D22 /* PBXContainerItemProxy */ = {
+		4EBCCA7A1A975DDB009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 30DF7CB816D39EAA00C8225C;
 			remoteInfo = installerHelper;
 		};
-		D8CCFEA8198A01A900503D22 /* PBXContainerItemProxy */ = {
+		4EBCCA7C1A975DDB009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1BD78B9F1726B2820005F251;
 			remoteInfo = LeakFinder;
 		};
-		F57AC48D19E222F9001BE387 /* PBXContainerItemProxy */ = {
+		4EBCCA7E1A975DF1009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
 			proxyType = 1;
@@ -91,7 +90,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D8CCFEAC198A021D00503D22 /* Libmacgpg.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,15 +135,14 @@
 		D84DFB3118FECF12007B4E49 /* AMPGpg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPGpg.h; sourceTree = "<group>"; };
 		D84DFB3218FECF12007B4E49 /* AMPGpg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPGpg.m; sourceTree = "<group>"; };
 		D875A3CD1989F4170046A53E /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Libmacgpg.framework; sourceTree = "<group>"; };
-		D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = ../GPG/Libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
-		D8E1A6E118FEDF3D00352E29 /* AMPluginFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AMPluginFramework.framework; path = ../AMPluginFramework/build/Debug/AMPluginFramework.framework; sourceTree = "<group>"; };
+		D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/Libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
 		D8E1A6E318FEDF5F00352E29 /* AMPGpgView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPGpgView.h; sourceTree = "<group>"; };
 		D8E1A6E418FEDF5F00352E29 /* AMPGpgView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPGpgView.m; sourceTree = "<group>"; };
 		D8E1A6E618FEE0BF00352E29 /* AMPGpgEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPGpgEncryption.h; sourceTree = "<group>"; };
 		D8E1A6E718FEE0BF00352E29 /* AMPGpgEncryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPGpgEncryption.m; sourceTree = "<group>"; };
 		D8E1A71D18FEEC7100352E29 /* AMPGpgButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPGpgButton.h; sourceTree = "<group>"; };
 		D8E1A71E18FEEC7100352E29 /* AMPGpgButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPGpgButton.m; sourceTree = "<group>"; };
-		F57AC48619E222D7001BE387 /* AMPluginFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AMPluginFramework.framework; path = ../DerivedData/AirmailWS/Build/Products/Debug/AMPluginFramework.framework; sourceTree = "<group>"; };
+		F57AC48619E222D7001BE387 /* AMPluginFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AMPluginFramework.framework; path = ../AMPluginFramework.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,15 +150,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EBCCA801A975DF7009532B2 /* Libmacgpg.framework in Frameworks */,
 				F57AC48719E222D7001BE387 /* AMPluginFramework.framework in Frameworks */,
 				D84DFB0018FECEDA007B4E49 /* Cocoa.framework in Frameworks */,
-				D8CCFEAB198A01F100503D22 /* Libmacgpg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4EBCCA6D1A975DDB009532B2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4EBCCA751A975DDB009532B2 /* Libmacgpg.framework */,
+				4EBCCA771A975DDB009532B2 /* UnitTest.octest */,
+				4EBCCA791A975DDB009532B2 /* org.gpgtools.Libmacgpg.xpc */,
+				4EBCCA7B1A975DDB009532B2 /* installerHelper */,
+				4EBCCA7D1A975DDB009532B2 /* LeakFinder.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D84DFAF318FECEDA007B4E49 = {
 			isa = PBXGroup;
 			children = (
@@ -185,7 +194,6 @@
 			children = (
 				F57AC48619E222D7001BE387 /* AMPluginFramework.framework */,
 				D875A3CD1989F4170046A53E /* Libmacgpg.framework */,
-				D8E1A6E118FEDF3D00352E29 /* AMPluginFramework.framework */,
 				D84DFAFF18FECEDA007B4E49 /* Cocoa.framework */,
 				D84DFB0118FECEDA007B4E49 /* Other Frameworks */,
 			);
@@ -237,18 +245,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D8CCFE98198A01A900503D22 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D8CCFEA1198A01A900503D22 /* Libmacgpg.framework */,
-				D8CCFEA3198A01A900503D22 /* UnitTest.octest */,
-				D8CCFEA5198A01A900503D22 /* org.gpgtools.Libmacgpg.xpc */,
-				D8CCFEA7198A01A900503D22 /* installerHelper */,
-				D8CCFEA9198A01A900503D22 /* LeakFinder.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -267,7 +263,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				F57AC48E19E222F9001BE387 /* PBXTargetDependency */,
+				4EBCCA7F1A975DF1009532B2 /* PBXTargetDependency */,
 			);
 			name = AMPGpg;
 			productName = AMPGpg;
@@ -295,7 +291,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = D8CCFE98198A01A900503D22 /* Products */;
+					ProductGroup = 4EBCCA6D1A975DDB009532B2 /* Products */;
 					ProjectRef = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
 				},
 			);
@@ -307,39 +303,39 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		D8CCFEA1198A01A900503D22 /* Libmacgpg.framework */ = {
+		4EBCCA751A975DDB009532B2 /* Libmacgpg.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Libmacgpg.framework;
-			remoteRef = D8CCFEA0198A01A900503D22 /* PBXContainerItemProxy */;
+			remoteRef = 4EBCCA741A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D8CCFEA3198A01A900503D22 /* UnitTest.octest */ = {
+		4EBCCA771A975DDB009532B2 /* UnitTest.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = UnitTest.octest;
-			remoteRef = D8CCFEA2198A01A900503D22 /* PBXContainerItemProxy */;
+			remoteRef = 4EBCCA761A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D8CCFEA5198A01A900503D22 /* org.gpgtools.Libmacgpg.xpc */ = {
+		4EBCCA791A975DDB009532B2 /* org.gpgtools.Libmacgpg.xpc */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = org.gpgtools.Libmacgpg.xpc;
-			remoteRef = D8CCFEA4198A01A900503D22 /* PBXContainerItemProxy */;
+			remoteRef = 4EBCCA781A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D8CCFEA7198A01A900503D22 /* installerHelper */ = {
+		4EBCCA7B1A975DDB009532B2 /* installerHelper */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = installerHelper;
-			remoteRef = D8CCFEA6198A01A900503D22 /* PBXContainerItemProxy */;
+			remoteRef = 4EBCCA7A1A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D8CCFEA9198A01A900503D22 /* LeakFinder.app */ = {
+		4EBCCA7D1A975DDB009532B2 /* LeakFinder.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = LeakFinder.app;
-			remoteRef = D8CCFEA8198A01A900503D22 /* PBXContainerItemProxy */;
+			remoteRef = 4EBCCA7C1A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -379,10 +375,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F57AC48E19E222F9001BE387 /* PBXTargetDependency */ = {
+		4EBCCA7F1A975DF1009532B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Libmacgpg;
-			targetProxy = F57AC48D19E222F9001BE387 /* PBXContainerItemProxy */;
+			targetProxy = 4EBCCA7E1A975DF1009532B2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -470,22 +466,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Developer ID Application: Bloop S.R.L (2E337YPCZY)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../AMPluginFramework/build/Debug",
-					"\"$(SRCROOT)/../GPG/Libmacgpg/build/Debug/\"",
+					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/\"",
 					"$(PROJECT_DIR)",
 					/Users/drain/Documents/Airmail_Mac/DerivedData/AirmailWS/Build/Products/Debug,
+					"/Users/patrice/git/AirmailPlugIn-Framework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AMPGpg/AMPGpg-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"\"$(SRCROOT)/../GPG/Libmacgpg/build/Debug/Libmacgpg.framework/Headers/\"",
+					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/Libmacgpg.framework/Headers/\"",
+					"\"$(SRCROOT)/../AMPluginFramework.framework/Headers/\"",
 				);
 				INFOPLIST_FILE = "AMPGpg/AMPGpg-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -499,21 +497,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Developer ID Application: Bloop S.R.L (2E337YPCZY)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../AMPluginFramework/build/Debug",
-					"\"$(SRCROOT)/../GPG/Libmacgpg/build/Debug/\"",
+					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/\"",
 					"$(PROJECT_DIR)",
 					/Users/drain/Documents/Airmail_Mac/DerivedData/AirmailWS/Build/Products/Debug,
+					"/Users/patrice/git/AirmailPlugIn-Framework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AMPGpg/AMPGpg-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"\"$(SRCROOT)/../GPG/Libmacgpg/build/Debug/Libmacgpg.framework/Headers/\"",
+					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/Libmacgpg.framework/Headers/\"",
+					"\"$(SRCROOT)/../AMPluginFramework.framework/Headers/\"",
 				);
 				INFOPLIST_FILE = "AMPGpg/AMPGpg-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
