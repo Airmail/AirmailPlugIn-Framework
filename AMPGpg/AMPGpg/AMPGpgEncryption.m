@@ -245,6 +245,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 - (NSString*) Sign:(NSString*)rfc from:(NSString*)from recipients:(NSArray*)recipients hiddenRecipients:(NSArray*)hiddenRecipients
 {
     NSString *stringToSign = [self GetBodyPartWithHeaders:rfc];
+    stringToSign = [stringToSign stringByAppendingString:@"\r\n"];
     if(!stringToSign) return nil;
    
     //Sign the content
@@ -266,7 +267,9 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSData *dataSigned = [gpgc processData:dataToSign withEncryptSignMode:GPGDetachedSign recipients:NULL hiddenRecipients:NULL];
     if(!dataSigned) return nil;
     
-    return [self CreateRfcSigned:rfc stringToSign:stringToSign dataSigned:dataSigned];
+    NSString *nameForHashAlgorithm = [GPGController nameForHashAlgorithm: [gpgc hashAlgorithm]];
+
+    return [self CreateRfcSigned:rfc stringToSign:stringToSign dataSigned:dataSigned nameForHashAlgorithm:nameForHashAlgorithm];
 }
 
 #pragma mark Mime
@@ -288,6 +291,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     multipartSignedCtype = [multipartSignedCtype stringByAppendingString:@"\tprotocol=\"application/pgp-encrypted\";\r\n"];
     multipartSignedCtype = [multipartSignedCtype stringByAppendingString:@"Content-Description: OpenPGP encrypted message"];
 
+    NSString *dataEncryptedStr = [[NSString alloc] initWithData:dataEncrypted encoding:NSASCIIStringEncoding];
     NSString *body = @"This is an OpenPGP/MIME encrypted message (RFC 2440 and 3156)\r\n";
     body = [body stringByAppendingFormat:@"--%@\r\n",boundary];
     body = [body stringByAppendingString:@"Content-Transfer-Encoding: 7bit\r\n"];
@@ -302,11 +306,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     body = [body stringByAppendingString:@"Content-Type: application/octet-stream; name=encrypted.asc\r\n"];
     body = [body stringByAppendingString:@"Content-Description: OpenPGP encrypted message\r\n"];
     body = [body stringByAppendingString:@"\r\n"];
-    body = [body stringByAppendingString:@"-----BEGIN PGP MESSAGE-----\r\n"];
-    body = [body stringByAppendingString:@"Comment: GPGTools - https://gpgtools.org\r\n"];
-    body = [body stringByAppendingString:@"\r\n"];
-    body = [body stringByAppendingString:[dataEncrypted ampBase64EncodedString]];
-    body = [body stringByAppendingString:@"\r\n-----END PGP MESSAGE-----\r\n"];
+    body = [body stringByAppendingString:dataEncryptedStr];
     body = [body stringByAppendingString:@"\r\n"];
     body = [body stringByAppendingFormat:@"--%@--",boundary];
     
@@ -318,7 +318,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     return rfcOut;
 }
 
-- (NSString*) CreateRfcSigned:(NSString*)rfc stringToSign:(NSString*)stringToSign dataSigned:(NSData*)dataSigned
+- (NSString*) CreateRfcSigned:(NSString*)rfc stringToSign:(NSString*)stringToSign dataSigned:(NSData*)dataSigned nameForHashAlgorithm:(NSString*)nameForHashAlgorithm
 {
     //    Recreate RFC
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
@@ -332,10 +332,12 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
     NSString *multipartSignedCtype = @"Content-Type: multipart/signed;\r\n";
     multipartSignedCtype = [multipartSignedCtype stringByAppendingFormat:@"\tboundary=\"%@\";\r\n",boundary];
-    multipartSignedCtype = [multipartSignedCtype stringByAppendingString:@"\tprotocol=\"application/pgp-signature\"; micalg=pgp-sha512"];
+    multipartSignedCtype = [multipartSignedCtype stringByAppendingString:@"\tprotocol=\"application/pgp-signature\";\r\n"];
+    multipartSignedCtype = [multipartSignedCtype stringByAppendingFormat:@"\tmicalg=pgp-%@\r\n",nameForHashAlgorithm];
 
     //    ------=_Part_68593_50468503.1397487740429
     NSString *partSigned = [NSString stringWithFormat:@"--%@\r\n",boundary];
+    NSString *dataSignedStr = [[NSString alloc] initWithData:dataSigned encoding:NSASCIIStringEncoding];
     
 //    --Apple-Mail=_1DF223E0-8C6F-4931-9C66-57559AD94CB5
 //    Content-Transfer-Encoding: 7bit
@@ -348,10 +350,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     partSignature = [partSignature stringByAppendingString:@"Content-Type: application/pgp-signature; name=signature.asc\r\n"];
     partSignature = [partSignature stringByAppendingString:@"Content-Description: Message signed with OpenPGP using AMPGpg\r\n"];
     partSignature = [partSignature stringByAppendingString:@"\r\n"];
-    partSignature = [partSignature stringByAppendingString:@"-----BEGIN PGP SIGNATURE-----\r\n"];
-    partSignature = [partSignature stringByAppendingString:@"Comment: GPGTools - https://gpgtools.org\r\n\r\n"];
-    partSignature = [partSignature stringByAppendingString:[dataSigned ampBase64EncodedString]];
-    partSignature = [partSignature stringByAppendingString:@"\r\n-----END PGP SIGNATURE-----\r\n"];
+    partSignature = [partSignature stringByAppendingString: dataSignedStr];
     partSignature = [partSignature stringByAppendingString:@"\r\n"];
     partSignature = [partSignature stringByAppendingFormat:@"--%@--",boundary];
 
