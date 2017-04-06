@@ -23,7 +23,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
 
 @interface  AMPGpg()
 {
-    
+
 }
 @property (strong) AMPGpgEncryption *encryption;
 @property (strong) NSImage *imSignOn,*imSignOff,*imEncryptOn,*imEncryptOff,*imSignedOK,*imSignedBad,*imLockedKPI,*imUnLockedKPI,*imIcon;
@@ -51,7 +51,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
 {
     if(![super Load])
         return NO;
-    
+
     self.imIcon         = [self loadImage:@"pluginsGPG.psd"];
     self.imSignOn       = [self loadImage:@"g_active.psd"];
     self.imSignOff      = [self loadImage:@"g_inactive.psd"];
@@ -61,23 +61,23 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
     self.imSignedBad    = [self loadImage:@"gpg_bad.psd"];
     self.imLockedKPI    = [self loadImage:@"gpg_locked.psd"];
     self.imUnLockedKPI  = [self loadImage:@"gpg_unlocked.psd"];
-    
+
     return YES;
 }
 
 - (void) Enable
 {
-    
+
 }
 
 - (void) Disable
 {
-    
+
 }
 
 - (void) Invalid
 {
-    
+
 }
 
 - (void) Reload
@@ -128,7 +128,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
 {
     //Return a new composer btn for new created the composer
     NSView *v = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 44, 20)];
-    
+
     AMPGpgButton *lockBtn = [[AMPGpgButton alloc] initWithFrame:NSMakeRect(0, 0, 22, 20)
                                                           image:self.imEncryptOn
                                                             alt:self.imEncryptOff
@@ -136,7 +136,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
                                                  rememberChoice:self.rememberChoice];
     [lockBtn setToolTip:NSLocalizedString(@"PGP Encrypt/Decrypt",@"PGP Sign/Unsign")];
     [v addSubview:lockBtn];
-    
+
     AMPGpgButton *signBtn = [[AMPGpgButton alloc] initWithFrame:NSMakeRect(22, 0, 22, 20)
                                                           image:self.imSignOn
                                                             alt:self.imSignOff
@@ -156,10 +156,10 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
     AMPGpgButton *signBtn    = [self btnForTag:AMP_GPG_COMPOSER_TYPE_BTN_SIGN    info:info];
     NSInteger canSign        = [self.encryption CheckSender:info];
     NSInteger canEncrypt     = [self.encryption CheckRecipients:info];
-  
+
     //Some unicors will die for such nested if... structure :)
     dispatch_async(dispatch_get_main_queue(), ^{
-       
+
         if(canSign)
         {
             [signBtn ManageState:YES];
@@ -181,6 +181,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
 //USED BY AM TO CHECK IF THE RFC IS ENCRYPTED
 - (NSNumber*)  ampPileIsEncrypted:(AMPMCOMessageParser*)parser
 {
+    // NSLog(@"CHECKING ENCRYPTION");
     return @([self.encryption isEncrypted:parser]);
 }
 
@@ -301,7 +302,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
         [ret addObject:imvEncrypted];
         [self.encryptedMessages removeObjectForKey:message.idx];
     }
-    
+
     NSNumber *sign = [self.signedMessages objectForKey:message.idx];
     if(sign.integerValue > 0)
     {
@@ -310,18 +311,18 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
         {
             [imvSign setImage:self.imSignedOK];
             [imvSign setToolTip:NSLocalizedString(@"Verified",@"Verified")];
-            
+
         }
         else if(sign.integerValue == AMP_SIGNED_FAILS)
         {
             [imvSign setImage:self.imSignedBad];
             [imvSign setToolTip:NSLocalizedString(@"Not Verified",@"Not Verified")];
-            
+
         }
         [ret addObject:imvSign];
         [self.signedMessages    removeObjectForKey:message.idx];
     }
-        
+
     return ret;
 }
 
@@ -334,7 +335,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
         [self LogError:@"No Button for the plugin"];
         return nil;
     }
-    
+
     NSView *v = composerBtns[0];
     for(AMPGpgButton *btn in v.subviews)
     {

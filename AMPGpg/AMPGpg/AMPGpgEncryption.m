@@ -57,18 +57,55 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     NSLog(@"AMPGpgEncryption Get valid key");
 
+    NSSet *keys = [[GPGKeyManager sharedInstance] allKeys];
+
+    for (GPGKey *key in keys)
+    {
+        if ([self isKey: key forEmail: mail] && [self checkValidityOfKey: key])
+        {
+            return key;
+        }
+    }
+
+    return nil;
+}
+
+- (BOOL)isKey: (GPGKey *)key
+     forEmail: (NSString *)email
+{
+    for (GPGUserID *uid in key.userIDs)
+    {
+        if([uid.email isEqualToString: email])
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+- (BOOL)checkValidityOfKey: (GPGKey *)key
+{
+    if(key.validity == GPGValidityFull || key.validity == GPGValidityUltimate)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+- (GPGKey *) getKeyFromMail: (NSString *)mail
+{
     for(GPGKey *key in [[GPGKeyManager sharedInstance] allKeys])
     {
-        if(key.validity < GPGValidityInvalid) {
-            for (GPGUserID *uid in key.userIDs) {
-                if([uid.email isEqualToString:mail])
-                {
-                    NSLog(@"AMPGpgEncryption GetKeyForMail GPGKey %@ canAnySign %d canAnyEncrypt %d key.validity %d %@",mail, key.canSign, key.canAnyEncrypt, key.validity, key.keyID);
-                    return key;
-                }
+        for (GPGUserID *uid in key.userIDs) {
+            if([uid.email isEqualToString:mail])
+            {
+                return key;
             }
         }
     }
+
     return nil;
 }
 
@@ -129,6 +166,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
 - (NSData*) Decrypt:(AMPMessage*)message
 {
+    // NSLog(@"DECRYPTING");
     NSData *data = message.rfcData;
     if(!data)
         @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt missing data to decrypt" userInfo:nil];
@@ -231,6 +269,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 #pragma mark - Encrypt/Sign
 - (NSString*) Encrypt:(NSString*)rfc from:(NSString*)mail recipients:(NSArray*)recipients hiddenRecipients:(NSArray*)hiddenRecipients
 {
+    // NSLog(@"RFC: %@", rfc);
     //Exctract ctype + body
     NSString *stringToEncrypt = [self GetBodyPartWithHeaders:rfc];
     if(!stringToEncrypt) return nil;
@@ -467,16 +506,11 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
     while(YES)
     {
-        //Start Boundary (-boundary\r\n)
         if(![scanner scanUpAndScan:preBoundary intoString:nil]) break;
         if([scanner scanString:@"--" intoString:nil]) //chiusura
             break;
 
         if(![scanner scanUpAndScan:@"\n"        intoString:nil]) break;
-
-        //        NSString *log;
-        //        [scanner nextCharacters:10 inString:&log];
-        //        NSLog(@"%@",log);
 
         NSString *detachedString = nil;
         if(![scanner scanUpToString:[NSString stringWithFormat:@"\n%@",preBoundary] intoString:&detachedString])
