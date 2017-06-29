@@ -29,5 +29,6 @@
 
 - (AMPSignatureVerify*) VerifySignature:(AMPMessage*)message;
 
+- (NSString*) GetHeader:(NSScanner*)scanner header:(NSString*)headerName;
 
 @end

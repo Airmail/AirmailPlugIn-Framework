@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 bloop. All rights reserved.
 //
 
-#import <AMPluginFramework/AMPView.h>
+#import <AMPView.h>
 
 @interface AMPGpgView : AMPView
 {

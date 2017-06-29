@@ -94,7 +94,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
 
 - (NSString*) nametext
 {
-    return @"GPG BETA";
+    return @"GPG BETA1";
 }
 
 - (NSString*) description
@@ -206,10 +206,12 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
     NSData *data = nil;
     @try{
         data = [self.encryption Decrypt:message];
-        if(data)
+        if(data) {
             [self.encryptedMessages setObject:@(YES) forKey:message.idx];
+        }
     }
     @catch (NSException *exception) {
+        NSLog(@"Failed to decrypt message due to %@", exception.reason);
         [self LogError:exception.reason];
         [self.encryptedMessages setObject:@(NO) forKey:message.idx];
     }
@@ -241,11 +243,43 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
     return sr;
 }
 
+
+- (NSString*) ampUniqueMessageRender:(AMPMessage*)message
+{
+    // XXX this is very much of a hack to just be able to read email.
+    // Many thing actually don't work.
+    // The root of the problem, I suspect, is that the callback ampPileMessageView does not get called with all messages
+    NSData *data = nil;
+    NSString *rfc = [[NSString alloc] initWithData:message.rfcData encoding:NSUTF8StringEncoding];
+    @try{
+        NSScanner *scanner  = [NSScanner scannerWithString:rfc];
+        [scanner setCharactersToBeSkipped:nil];
+        NSString  *ctype    = [self.encryption GetHeader:scanner header:@"Content-Type"];
+        if (!ctype || ![ctype hasPrefix:@" multipart/encrypted"]) {
+            return message.htmlBody;
+        }
+        
+        /*Content-Type: multipart/encrypted; boundary="Apple-Mail=_45365103-713A-4FD2-B339-A5A401563C8F"; protocol="application/pgp-encrypted";
+         */
+        data = [self.encryption Decrypt:message];
+        if (data) {
+            [self.encryptedMessages setObject:@(YES) forKey:message.idx];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Failed to decrypt message due to %@", exception.reason);
+        return nil;
+    }
+    @finally {
+    }
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
 //USED BY AM TO RENDER IN THE BODYVIEW
 - (NSArray*) ampPileMessageView:(AMPMessage*)message
 {
     NSMutableArray *ret = [NSMutableArray array];
-    
+
     NSNumber *enc = [self.encryptedMessages objectForKey:message.idx];
     if(enc.integerValue > 0)
     {
