@@ -8,7 +8,7 @@
 
 #import "AMPGpgView.h"
 #import "AMPGpg.h"
-#import <AMPluginFramework/AMPluginFramework.h>
+#import <AMPluginFramework.h>
 
 @interface  AMPGpgView()
 {

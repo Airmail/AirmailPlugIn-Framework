@@ -29,19 +29,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		173A8A601F03EB3600E65436 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 30BE73BE1B54015C001A2137;
+			remoteInfo = UnitTests;
+		};
 		4EBCCA741A975DDB009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = Libmacgpg;
-		};
-		4EBCCA761A975DDB009532B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 30C8B38E139503A800F49AA1;
-			remoteInfo = UnitTest;
 		};
 		4EBCCA781A975DDB009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -163,10 +163,10 @@
 			isa = PBXGroup;
 			children = (
 				4EBCCA751A975DDB009532B2 /* Libmacgpg.framework */,
-				4EBCCA771A975DDB009532B2 /* UnitTest.octest */,
+				173A8A611F03EB3600E65436 /* UnitTests.xctest */,
 				4EBCCA791A975DDB009532B2 /* org.gpgtools.Libmacgpg.xpc */,
-				4EBCCA7B1A975DDB009532B2 /* installerHelper */,
 				4EBCCA7D1A975DDB009532B2 /* LeakFinder.app */,
+				4EBCCA7B1A975DDB009532B2 /* GPGTools.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -303,18 +303,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		173A8A611F03EB3600E65436 /* UnitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTests.xctest;
+			remoteRef = 173A8A601F03EB3600E65436 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		4EBCCA751A975DDB009532B2 /* Libmacgpg.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Libmacgpg.framework;
 			remoteRef = 4EBCCA741A975DDB009532B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4EBCCA771A975DDB009532B2 /* UnitTest.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTest.octest;
-			remoteRef = 4EBCCA761A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4EBCCA791A975DDB009532B2 /* org.gpgtools.Libmacgpg.xpc */ = {
@@ -324,10 +324,10 @@
 			remoteRef = 4EBCCA781A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4EBCCA7B1A975DDB009532B2 /* installerHelper */ = {
+		4EBCCA7B1A975DDB009532B2 /* GPGTools.app */ = {
 			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = installerHelper;
+			fileType = wrapper.application;
+			path = GPGTools.app;
 			remoteRef = 4EBCCA7A1A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -466,7 +466,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -475,7 +475,7 @@
 					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/\"",
 					"$(PROJECT_DIR)",
 					/Users/drain/Documents/Airmail_Mac/DerivedData/AirmailWS/Build/Products/Debug,
-					"/Users/patrice/git/AirmailPlugIn-Framework",
+					"/Users/x/code/macos/AirmailPlugIn-Framework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AMPGpg/AMPGpg-Prefix.pch";
@@ -488,6 +488,7 @@
 				INFOPLIST_FILE = "AMPGpg/AMPGpg-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_LDFLAGS = "-L/usr/local/opt/openssl/lib/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -497,7 +498,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,7 +506,7 @@
 					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/\"",
 					"$(PROJECT_DIR)",
 					/Users/drain/Documents/Airmail_Mac/DerivedData/AirmailWS/Build/Products/Debug,
-					"/Users/patrice/git/AirmailPlugIn-Framework",
+					"/Users/x/code/macos/AirmailPlugIn-Framework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AMPGpg/AMPGpg-Prefix.pch";
@@ -513,11 +514,12 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/Libmacgpg.framework/Headers/\"",
-					"\"$(SRCROOT)/../AMPluginFramework.framework/Headers/\"",
+					"\"$(SRCROOT)/../AMPluginFramework.framework/Headers/\"/**",
 				);
 				INFOPLIST_FILE = "AMPGpg/AMPGpg-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_LDFLAGS = "-L/usr/local/opt/openssl/lib/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 			};

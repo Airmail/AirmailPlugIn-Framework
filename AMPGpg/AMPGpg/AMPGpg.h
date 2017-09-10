@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 bloop. All rights reserved.
 //
 
-#import <AMPluginFramework/AMPluginFramework.h>
+#import <AMPluginFramework.h>
 
 extern NSString * const AMPGpgRemeberChoice;
 

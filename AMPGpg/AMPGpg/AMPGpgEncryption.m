@@ -7,7 +7,7 @@
 //
 
 #import "AMPGpgEncryption.h"
-#import <AMPluginFramework/AMPluginFramework.h>
+#import <AMPluginFramework.h>
 #import <Libmacgpg/Libmacgpg.h>
 //#import "Libmacgpg.h"
 
@@ -18,15 +18,23 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 #pragma mark - Calls
 - (NSInteger) isEncrypted:(AMPMCOMessageParser*)parser
 {
+    /*NSLog(@"Checking if message FROM: %@ is encrypted", parser.header.from.RFC822String);
+    NSLog(@"Body \n%@", [[NSString alloc] initWithData:parser.data encoding:NSUTF8StringEncoding]);
+     */
+
     NSInteger flag = AMP_ENCRYPTED_NONE;
-    if(!parser)
+    if(!parser) {
+        NSLog(@"No Parser");
         return flag;
+    }
     
     for(AMPMCOAbstractPart *part in  [parser.mainPart AllParts])
     {
+        NSLog(@"DOING Iteration");
+
         if(part.mimeType)
         {
-            //NSLog(@"%@",part.mimeType);
+            NSLog(@"Mime-Type: %@",part.mimeType);
             if([part.mimeType isEqualToString:@"application/pgp-signature"])
                 flag |= AMP_ENCRYPTED_SIGNED;
             
@@ -47,6 +55,8 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
 - (GPGKey*) GetValidKeyForMail:(NSString*)mail
 {
+    NSLog(@"AMPGpgEncryption Get valid key");
+
     for(GPGKey *key in [[GPGKeyManager sharedInstance] allKeys])
     {
         if(key.validity < GPGValidityInvalid) {
@@ -128,24 +138,30 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot parse the data" userInfo:nil];;
     
     NSArray *encParts = [parser.mainPart PartsForMime:@"application/octet-stream"];
-    if(encParts.count == 1)
-    {
-        AMPMCOAbstractPart *part = encParts[0];
-        if(![part.filename isEqualToString:@"encrypted.asc"])
-            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot find encrypted.asc" userInfo:nil];;
+    for (int i = 0; i < [encParts count]; i++) {
+        AMPMCOAbstractPart *part = [encParts objectAtIndex:i];
+        if(![part.filename hasSuffix:@".asc"])
+            continue;
+            /*@throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot find encrypted.asc" userInfo:nil];;*/
         
         //NSLog(@"%@",part);
         NSData *dataAttachment = [part callSelector:@selector(data)];
-        if(!dataAttachment || dataAttachment.length == 0)
-            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot get data from encrypted attachment" userInfo:nil];;
+        if(!dataAttachment || dataAttachment.length == 0) {
+            NSLog(@"GPG Decrypt cannot get data from encrypted attachment");
+            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot get data from encrypted attachment" userInfo:nil];
+        }
         
         NSData *decodedData = [[GPGController gpgController] decryptData:dataAttachment];
-        if(!decodedData || decodedData.length == 0)
-            @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot decryptData" userInfo:nil];;
+        if(!decodedData || decodedData.length == 0) {
+            NSLog(@"GPG Decrypt cannot decryptData");
+            continue;
+            /*@throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot decryptData" userInfo:nil];*/
+        }
         
         //NSLog(@"***** ***** ***** ***** \n%@", [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding]);
         return decodedData;
     }
+    NSLog(@"GPG Decrypt Failed");
     return nil;
 
 }
@@ -473,6 +489,8 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 //Extract an header from an rfc
 - (NSString*) GetHeader:(NSScanner*)scanner header:(NSString*)headerName
 {
+    NSLog(@"AMPGpgEncryption Get headers\n");
+
     NSString *header        = [headerName stringByAppendingString:@":"];
     NSString *newline       = @"\r\n";
     
@@ -529,6 +547,8 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 //Rewrite headers with a new ContentType
 - (NSString*) TrascriptHeaders:(NSString*)rfc withNewContentType:(NSString*)ctype
 {
+    NSLog(@"AMPGpgEncryption Transcribing headers\n");
+
     NSMutableString *rfcOut = [NSMutableString new];
     __block NSInteger ctypeMode = 0;
     [rfc enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
