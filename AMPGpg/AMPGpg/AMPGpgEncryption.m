@@ -48,7 +48,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 - (GPGKey*) GetValidKeyForMail:(NSString*)mail
 {
     NSSet *keys = [[GPGKeyManager sharedInstance] allKeys];
-    NSLog(@"AMPGpgEncryption keys count: %lu", (unsigned long)keys.count);
 
     for (GPGKey *key in keys)
     {
@@ -66,7 +65,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     for (GPGUserID *uid in key.userIDs)
     {
-        NSLog(@"AMPGpgEncryption checking key '%@' with email '%@' for email '%@'", uid.hashID, uid.email, email);
         if([uid.email isEqualToString: email])
         {
             return true;
