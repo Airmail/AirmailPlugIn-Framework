@@ -18,23 +18,15 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 #pragma mark - Calls
 - (NSInteger) isEncrypted:(AMPMCOMessageParser*)parser
 {
-    /*NSLog(@"Checking if message FROM: %@ is encrypted", parser.header.from.RFC822String);
-    NSLog(@"Body \n%@", [[NSString alloc] initWithData:parser.data encoding:NSUTF8StringEncoding]);
-     */
-
     NSInteger flag = AMP_ENCRYPTED_NONE;
     if(!parser) {
-        NSLog(@"No Parser");
         return flag;
     }
 
     for(AMPMCOAbstractPart *part in  [parser.mainPart AllParts])
     {
-        NSLog(@"DOING Iteration");
-
         if(part.mimeType)
         {
-            NSLog(@"Mime-Type: %@",part.mimeType);
             if([part.mimeType isEqualToString:@"application/pgp-signature"])
                 flag |= AMP_ENCRYPTED_SIGNED;
 
@@ -55,9 +47,8 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
 - (GPGKey*) GetValidKeyForMail:(NSString*)mail
 {
-    NSLog(@"AMPGpgEncryption Get valid key");
-
     NSSet *keys = [[GPGKeyManager sharedInstance] allKeys];
+    NSLog(@"AMPGpgEncryption keys count: %lu", (unsigned long)keys.count);
 
     for (GPGKey *key in keys)
     {
@@ -75,6 +66,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     for (GPGUserID *uid in key.userIDs)
     {
+        NSLog(@"AMPGpgEncryption checking key '%@' with email '%@' for email '%@'", uid.hashID, uid.email, email);
         if([uid.email isEqualToString: email])
         {
             return true;
@@ -166,7 +158,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
 - (NSData*) Decrypt:(AMPMessage*)message
 {
-    // NSLog(@"DECRYPTING");
     NSData *data = message.rfcData;
     if(!data)
         @throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt missing data to decrypt" userInfo:nil];
@@ -182,7 +173,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
             continue;
             /*@throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot find encrypted.asc" userInfo:nil];;*/
 
-        //NSLog(@"%@",part);
         NSData *dataAttachment = [part callSelector:@selector(data)];
         if(!dataAttachment || dataAttachment.length == 0) {
             NSLog(@"GPG Decrypt cannot get data from encrypted attachment");
@@ -196,7 +186,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
             /*@throw [NSException exceptionWithName:AMPGpgEncryptionException  reason:@"GPG Decrypt cannot decryptData" userInfo:nil];*/
         }
 
-        //NSLog(@"***** ***** ***** ***** \n%@", [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding]);
         return decodedData;
     }
     NSLog(@"GPG Decrypt Failed");
@@ -230,7 +219,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     {
         ver.signatureVerify = AMP_SIGNED_FAILS;
         AMPMCOAbstractPart *part = encParts[0];
-        //NSLog(@"%@",part);
         if(![part.filename isEqualToString:@"signature.asc"])
             return ver;
 
@@ -238,8 +226,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         if(!dataAttachment)
             return ver;
 
-//        NSLog(@"***** dataAttachment \n%@", [[NSString alloc] initWithData:dataAttachment encoding:NSUTF8StringEncoding]);
-//        NSLog(@"***** detachedData   \n%@", [[NSString alloc] initWithData:detachedData   encoding:NSUTF8StringEncoding]);
 
         NSArray *arr =  [[GPGController gpgController] verifySignature:dataAttachment originalData:detachedData];
         //CASE 1 Signer >> multi-signer does not work we have only 1 sender
@@ -253,7 +239,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
                         for (GPGUserID *uid in key.userIDs) {
                             if([uid.email isEqualToString:message.from.mail])
                             {
-                                NSLog(@"SIGNATURE OK %@",uid.email);
                                 ver.signatureVerify = AMP_SIGNED_SUCCESS;
                                 return ver;
                             }
@@ -269,7 +254,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 #pragma mark - Encrypt/Sign
 - (NSString*) Encrypt:(NSString*)rfc from:(NSString*)mail recipients:(NSArray*)recipients hiddenRecipients:(NSArray*)hiddenRecipients
 {
-    // NSLog(@"RFC: %@", rfc);
     //Exctract ctype + body
     NSString *stringToEncrypt = [self GetBodyPartWithHeaders:rfc];
     if(!stringToEncrypt) return nil;
@@ -314,7 +298,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     GPGKey *key = [self GetValidKeyForMail:from];
     if(!key)
     {
-        NSLog(@"Error no signer key %@",from);
         return nil;
     }
 
@@ -433,7 +416,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
     NSString *boundary  = [self ParseBoundary:scan];
     if(!boundary) return nil;
-    //NSLog(@"%@",boundary);
 
     NSArray *boundaries = [self ParsePartsForBoundary:scan boundary:boundary];
     if(boundaries && boundaries.count > 0)
@@ -524,8 +506,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 //Extract an header from an rfc
 - (NSString*) GetHeader:(NSScanner*)scanner header:(NSString*)headerName
 {
-    NSLog(@"AMPGpgEncryption Get headers\n");
-
     NSString *header        = [headerName stringByAppendingString:@":"];
     NSString *newline       = @"\r\n";
 
@@ -582,8 +562,6 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 //Rewrite headers with a new ContentType
 - (NSString*) TrascriptHeaders:(NSString*)rfc withNewContentType:(NSString*)ctype
 {
-    NSLog(@"AMPGpgEncryption Transcribing headers\n");
-
     NSMutableString *rfcOut = [NSMutableString new];
     __block NSInteger ctypeMode = 0;
     [rfc enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
