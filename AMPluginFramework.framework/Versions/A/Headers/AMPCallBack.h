@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class AMPAccount;
 @class AMPMessage;
+@class AMPFolder;
 @class AMPComposerInfo;
 @interface AMPCallBack : NSObject
 {
@@ -37,6 +38,21 @@
  */
 - (void) MarkAsReadMessages:(NSArray*)messages;
 
+/**
+ *  Move Message action, it will move the messages to the folder
+ *
+ *  @param messages the messages to move
+ *  @param folder   the folder where to move
+ */
+- (void) MoveMessages:(NSArray*)messages folder:(AMPFolder*)folder;
+
+/**
+ *  Copy Message action, it will copy the messages to the folder
+ *
+ *  @param messages the messages to copy
+ *  @param folder   the folder where to copy
+ */
+- (void) CopyMessages:(NSArray*)messages folder:(AMPFolder*)folder;
 
 /**
  *  Forward message action, it will open a composer for each message passed
@@ -96,5 +112,9 @@
  *  @return the image
  */
 - (NSImage*) MessageImage:(AMPMessage*)message;
+
+
+- (NSNumber*) Beta_Store_Status;
+- (void) ChangePluginStatus:(NSString*)plugin_id status:(NSNumber*)status;
 
 @end

@@ -17,15 +17,13 @@
 		B30FF67219009F430053FD49 /* gpg_locked.psd in Resources */ = {isa = PBXBuildFile; fileRef = B30FF66E19009F430053FD49 /* gpg_locked.psd */; };
 		B30FF67319009F430053FD49 /* gpg_unlocked.psd in Resources */ = {isa = PBXBuildFile; fileRef = B30FF66F19009F430053FD49 /* gpg_unlocked.psd */; };
 		B30FF68919017D2B0053FD49 /* pluginsGPG.psd in Resources */ = {isa = PBXBuildFile; fileRef = B30FF68819017D2B0053FD49 /* pluginsGPG.psd */; };
-		D833B2C3198B082B00774657 /* AMPGpg.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = D84DFAFC18FECEDA007B4E49 /* AMPGpg.bundle */; };
+		D83863E32180666D000BE713 /* AMPluginFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57AC48619E222D7001BE387 /* AMPluginFramework.framework */; };
 		D84DFB0018FECEDA007B4E49 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84DFAFF18FECEDA007B4E49 /* Cocoa.framework */; };
 		D84DFB0A18FECEDA007B4E49 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D84DFB0818FECEDA007B4E49 /* InfoPlist.strings */; };
 		D84DFB3318FECF12007B4E49 /* AMPGpg.m in Sources */ = {isa = PBXBuildFile; fileRef = D84DFB3218FECF12007B4E49 /* AMPGpg.m */; };
 		D8E1A6E518FEDF5F00352E29 /* AMPGpgView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E1A6E418FEDF5F00352E29 /* AMPGpgView.m */; };
 		D8E1A6E818FEE0BF00352E29 /* AMPGpgEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E1A6E718FEE0BF00352E29 /* AMPGpgEncryption.m */; };
-		D8E1A6E918FEE64A00352E29 /* AMPGpg.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = D84DFAFC18FECEDA007B4E49 /* AMPGpg.bundle */; };
 		D8E1A71F18FEEC7100352E29 /* AMPGpgButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E1A71E18FEEC7100352E29 /* AMPGpgButton.m */; };
-		F57AC48719E222D7001BE387 /* AMPluginFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F57AC48619E222D7001BE387 /* AMPluginFramework.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,13 +48,6 @@
 			remoteGlobalIDString = 1B46CFCC161555DF00CF9C5F;
 			remoteInfo = org.gpgtools.Libmacgpg.xpc;
 		};
-		4EBCCA7A1A975DDB009532B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 30DF7CB816D39EAA00C8225C;
-			remoteInfo = installerHelper;
-		};
 		4EBCCA7C1A975DDB009532B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */;
@@ -74,32 +65,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D833B2BD198B081E00774657 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "~/Library/Containers/it.bloop.airmail2/Data/Library/Application Support/Airmail/General/Plugins";
-			dstSubfolderSpec = 0;
-			files = (
-				D833B2C3198B082B00774657 /* AMPGpg.bundle in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D8CCFE93198A00FA00503D22 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D8E1A6DE18FEDEEC00352E29 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "~/Library/Containers/it.bloop.airmail.beta10/Data/Library/Application Support/Airmail/General/Plugins";
-			dstSubfolderSpec = 0;
-			files = (
-				D8E1A6E918FEE64A00352E29 /* AMPGpg.bundle in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +105,6 @@
 		D84DFB0B18FECEDA007B4E49 /* AMPGpg-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AMPGpg-Prefix.pch"; sourceTree = "<group>"; };
 		D84DFB3118FECF12007B4E49 /* AMPGpg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPGpg.h; sourceTree = "<group>"; };
 		D84DFB3218FECF12007B4E49 /* AMPGpg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPGpg.m; sourceTree = "<group>"; };
-		D875A3CD1989F4170046A53E /* Libmacgpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Libmacgpg.framework; sourceTree = "<group>"; };
 		D8CCFE97198A01A900503D22 /* Libmacgpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Libmacgpg.xcodeproj; path = Dependencies/Libmacgpg/Libmacgpg.xcodeproj; sourceTree = "<group>"; };
 		D8E1A6E318FEDF5F00352E29 /* AMPGpgView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPGpgView.h; sourceTree = "<group>"; };
 		D8E1A6E418FEDF5F00352E29 /* AMPGpgView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPGpgView.m; sourceTree = "<group>"; };
@@ -151,8 +121,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EBCCA801A975DF7009532B2 /* Libmacgpg.framework in Frameworks */,
-				F57AC48719E222D7001BE387 /* AMPluginFramework.framework in Frameworks */,
 				D84DFB0018FECEDA007B4E49 /* Cocoa.framework in Frameworks */,
+				D83863E32180666D000BE713 /* AMPluginFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,9 +134,8 @@
 			children = (
 				4EBCCA751A975DDB009532B2 /* Libmacgpg.framework */,
 				173A8A611F03EB3600E65436 /* UnitTests.xctest */,
-				4EBCCA791A975DDB009532B2 /* org.gpgtools.Libmacgpg.xpc */,
 				4EBCCA7D1A975DDB009532B2 /* LeakFinder.app */,
-				4EBCCA7B1A975DDB009532B2 /* GPGTools.app */,
+				4EBCCA791A975DDB009532B2 /* org.gpgtools.Libmacgpg.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				F57AC48619E222D7001BE387 /* AMPluginFramework.framework */,
-				D875A3CD1989F4170046A53E /* Libmacgpg.framework */,
 				D84DFAFF18FECEDA007B4E49 /* Cocoa.framework */,
 				D84DFB0118FECEDA007B4E49 /* Other Frameworks */,
 			);
@@ -257,8 +225,6 @@
 				D8E1A71718FEE7B800352E29 /* CopyFiles */,
 				D84DFAFA18FECEDA007B4E49 /* Resources */,
 				D8CCFE93198A00FA00503D22 /* CopyFiles */,
-				D8E1A6DE18FEDEEC00352E29 /* CopyFiles */,
-				D833B2BD198B081E00774657 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -278,6 +244,11 @@
 			attributes = {
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = bloop;
+				TargetAttributes = {
+					D84DFAFB18FECEDA007B4E49 = {
+						DevelopmentTeam = 2E337YPCZY;
+					};
+				};
 			};
 			buildConfigurationList = D84DFAF718FECEDA007B4E49 /* Build configuration list for PBXProject "AMPGpg" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -319,16 +290,9 @@
 		};
 		4EBCCA791A975DDB009532B2 /* org.gpgtools.Libmacgpg.xpc */ = {
 			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
+			fileType = "wrapper.xpc-service";
 			path = org.gpgtools.Libmacgpg.xpc;
 			remoteRef = 4EBCCA781A975DDB009532B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4EBCCA7B1A975DDB009532B2 /* GPGTools.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = GPGTools.app;
-			remoteRef = 4EBCCA7A1A975DDB009532B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4EBCCA7D1A975DDB009532B2 /* LeakFinder.app */ = {
@@ -466,16 +430,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2E337YPCZY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../AMPluginFramework/build/Debug",
-					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/\"",
 					"$(PROJECT_DIR)",
-					/Users/drain/Documents/Airmail_Mac/DerivedData/AirmailWS/Build/Products/Debug,
-					"/Users/x/code/macos/AirmailPlugIn-Framework",
+					"\"$(SRCROOT)/../",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AMPGpg/AMPGpg-Prefix.pch";
@@ -502,11 +464,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../AMPluginFramework/build/Debug",
-					"\"$(SRCROOT)/Dependencies/Libmacgpg/build/Debug/\"",
 					"$(PROJECT_DIR)",
-					/Users/drain/Documents/Airmail_Mac/DerivedData/AirmailWS/Build/Products/Debug,
-					"/Users/x/code/macos/AirmailPlugIn-Framework",
+					"\"$(SRCROOT)/../",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AMPGpg/AMPGpg-Prefix.pch";

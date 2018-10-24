@@ -35,7 +35,7 @@
 #import "AMPMCOAttachment.h"
 #import "AMPMCOAbstractPart.h"
 #import "AMPMCOMultiPart.h"
-#import "AMPMCOAbstractMultiPart.h"
+#import "AMPMCOAbstractMultipart.h"
 #import "AMPMCOMessagePart.h"
 #import "AMPMCOAbstractMessagePart.h"
 #import "AMPMCOMessageHeader.h"

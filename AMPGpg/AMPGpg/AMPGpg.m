@@ -94,7 +94,7 @@ NSString * const AMPGpgRemeberChoice = @"AMPGpgRemeberChoices";
 
 - (NSString*) nametext
 {
-    return @"GPG BETA1";
+    return @"GPG BETA";
 }
 
 - (NSString*) description

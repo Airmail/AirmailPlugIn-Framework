@@ -93,7 +93,7 @@
 /**
  *  A bool value if the folder is hided
  *
- *  @return A bool value if the folder is hided
+ *  @return A bool value if the folder is hidden
  */
 - (NSNumber*) hided;
 
