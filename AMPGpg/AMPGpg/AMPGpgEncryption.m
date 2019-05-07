@@ -76,7 +76,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
 - (BOOL)checkValidityOfKey: (GPGKey *)key
 {
-    if(key.validity == GPGValidityFull || key.validity == GPGValidityUltimate)
+    if(key.validity == GPGValidityFull || key.validity == GPGValidityUltimate || key.validity == GPGValidityMarginal)
     {
         return true;
     }
@@ -229,7 +229,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         //CASE 1 Signer >> multi-signer does not work we have only 1 sender
         for(GPGSignature *sign in arr)
         {
-            if(sign.trust < GPGValidityInvalid )
+            if(sign.status == GPGErrorNoError && (sign.trust == GPGValidityMarginal || sign.trust == GPGValidityFull || sign.trust == GPGValidityUltimate))
             {
                 for(GPGKey *key in [[GPGKeyManager sharedInstance] allKeys])
                 {
