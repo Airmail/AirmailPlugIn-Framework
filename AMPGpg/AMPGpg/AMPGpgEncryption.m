@@ -468,11 +468,19 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     if(![scanner scanUpToString:@"boundary"    intoString:nil]) return nil;
     if(![scanner scanUpToString:@"="           intoString:nil]) return nil;
-    if(![scanner scanUpToString:@"\""          intoString:nil]) return nil;
-    if(![scanner scanString:@"\""              intoString:nil]) return nil;
-
+    
+    NSMutableString *boundaryEnd = [NSMutableString stringWithString:@"\""];
+    
+    if([scanner.string characterAtIndex:scanner.scanLocation + 1] == (unichar)'\"') {
+        if(![scanner scanUpToString:@"\""          intoString:nil]) return nil;
+        if(![scanner scanString:@"\""              intoString:nil]) return nil;
+    } else {
+        if(![scanner scanString:@"=" intoString:nil]) return nil;
+        [boundaryEnd setString:@";"];
+    }
+    
     NSString *boundary  = nil;
-    if(![scanner scanUpToString:@"\"" intoString:&boundary]) return nil;
+    if(![scanner scanUpToString:boundaryEnd intoString:&boundary]) return nil;
 
     if(!boundary) return nil;
     return boundary;
