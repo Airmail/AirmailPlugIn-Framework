@@ -436,6 +436,8 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     [scanner setCharactersToBeSkipped:nil];
 
     NSString  *ctype    = [self GetHeader:scanner header:@"Content-Type"];
+    NSUInteger singlePartStart = scanner.scanLocation;
+    
     if(!ctype) return nil;
 
     NSScanner *scanner2  = [NSScanner scannerWithString:ctype];
@@ -443,11 +445,15 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSString  *boundary = [self ParseBoundary:scanner2];
     if(!boundary)
     {
-        NSScanner *scannerSinglePart  = [NSScanner scannerWithString:rfc];
-        [scannerSinglePart setCharactersToBeSkipped:nil];
-        if(![scannerSinglePart scanUpAndScan:@"\r\n\r\n" intoString:nil])return nil;
+        //NSScanner *scannerSinglePart  = [NSScanner scannerWithString:rfc];
+        //[scannerSinglePart setCharactersToBeSkipped:nil];
+        //if(![scannerSinglePart scanUpAndScan:@"\r\n\r\n" intoString:nil])return nil;
 
-        NSString *rfcToSign = [rfc substringFromIndex:scannerSinglePart.scanLocation];
+        //NSString *rfcToSign = [rfc substringFromIndex:scannerSinglePart.scanLocation];
+        
+        NSString *singlePart = [rfc substringFromIndex:singlePartStart];
+        NSString *rfcToSign = [NSString stringWithFormat:@"Content-Type:%@\r\n%@", ctype, singlePart];
+        
         return rfcToSign;
     }
 
@@ -579,8 +585,16 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
             return;
         }
 
-        if([line hasPrefix:@"Content-Type"])
-            ctypeMode = 1; //start
+        if([line hasPrefix:@"Content-Type"]) {
+            if([line rangeOfString:@"multipart"].location != NSNotFound) {
+                ctypeMode = 1; //start
+            } else {
+                //Single part MIME message
+                [rfcOut appendFormat:@"%@\r\n\r\n", ctype];
+                *stop = YES;
+                return;
+            }
+        }
 
         switch (ctypeMode)
         {
