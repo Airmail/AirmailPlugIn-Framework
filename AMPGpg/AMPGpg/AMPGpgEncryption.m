@@ -76,7 +76,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 
 - (BOOL)checkValidityOfKey: (GPGKey *)key
 {
-    if(key.validity == GPGValidityFull || key.validity == GPGValidityUltimate)
+    if(key.validity == GPGValidityFull || key.validity == GPGValidityUltimate || key.validity == GPGValidityMarginal)
     {
         return true;
     }
@@ -229,7 +229,7 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
         //CASE 1 Signer >> multi-signer does not work we have only 1 sender
         for(GPGSignature *sign in arr)
         {
-            if(sign.trust < GPGValidityInvalid )
+            if(sign.status == GPGErrorNoError && (sign.trust == GPGValidityMarginal || sign.trust == GPGValidityFull || sign.trust == GPGValidityUltimate))
             {
                 for(GPGKey *key in [[GPGKeyManager sharedInstance] allKeys])
                 {
@@ -436,6 +436,8 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     [scanner setCharactersToBeSkipped:nil];
 
     NSString  *ctype    = [self GetHeader:scanner header:@"Content-Type"];
+    NSUInteger singlePartStart = scanner.scanLocation;
+    
     if(!ctype) return nil;
 
     NSScanner *scanner2  = [NSScanner scannerWithString:ctype];
@@ -443,11 +445,15 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
     NSString  *boundary = [self ParseBoundary:scanner2];
     if(!boundary)
     {
-        NSScanner *scannerSinglePart  = [NSScanner scannerWithString:rfc];
-        [scannerSinglePart setCharactersToBeSkipped:nil];
-        if(![scannerSinglePart scanUpAndScan:@"\r\n\r\n" intoString:nil])return nil;
+        //NSScanner *scannerSinglePart  = [NSScanner scannerWithString:rfc];
+        //[scannerSinglePart setCharactersToBeSkipped:nil];
+        //if(![scannerSinglePart scanUpAndScan:@"\r\n\r\n" intoString:nil])return nil;
 
-        NSString *rfcToSign = [rfc substringFromIndex:scannerSinglePart.scanLocation];
+        //NSString *rfcToSign = [rfc substringFromIndex:scannerSinglePart.scanLocation];
+        
+        NSString *singlePart = [rfc substringFromIndex:singlePartStart];
+        NSString *rfcToSign = [NSString stringWithFormat:@"Content-Type:%@\r\n%@", ctype, singlePart];
+        
         return rfcToSign;
     }
 
@@ -468,11 +474,19 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
 {
     if(![scanner scanUpToString:@"boundary"    intoString:nil]) return nil;
     if(![scanner scanUpToString:@"="           intoString:nil]) return nil;
-    if(![scanner scanUpToString:@"\""          intoString:nil]) return nil;
-    if(![scanner scanString:@"\""              intoString:nil]) return nil;
-
+    
+    NSMutableString *boundaryEnd = [NSMutableString stringWithString:@"\""];
+    
+    if([scanner.string characterAtIndex:scanner.scanLocation + 1] == (unichar)'\"') {
+        if(![scanner scanUpToString:@"\""          intoString:nil]) return nil;
+        if(![scanner scanString:@"\""              intoString:nil]) return nil;
+    } else {
+        if(![scanner scanString:@"=" intoString:nil]) return nil;
+        [boundaryEnd setString:@";"];
+    }
+    
     NSString *boundary  = nil;
-    if(![scanner scanUpToString:@"\"" intoString:&boundary]) return nil;
+    if(![scanner scanUpToString:boundaryEnd intoString:&boundary]) return nil;
 
     if(!boundary) return nil;
     return boundary;
@@ -571,8 +585,16 @@ NSString * const AMPGpgEncryptionException = @"AMPGpgEncryption_Exception";
             return;
         }
 
-        if([line hasPrefix:@"Content-Type"])
-            ctypeMode = 1; //start
+        if([line hasPrefix:@"Content-Type"]) {
+            if([line rangeOfString:@"multipart"].location != NSNotFound) {
+                ctypeMode = 1; //start
+            } else {
+                //Single part MIME message
+                [rfcOut appendFormat:@"%@\r\n\r\n", ctype];
+                *stop = YES;
+                return;
+            }
+        }
 
         switch (ctypeMode)
         {
